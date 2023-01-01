@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 login_check = 0
 
 
