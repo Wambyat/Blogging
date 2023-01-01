@@ -1,81 +1,32 @@
-<!DOCTYPE html>   
-<html>   
-<head>  
-<meta name="viewport" content="width=device-width, initial-scale=1">  
-<title> Login Page </title>  
-<style>   
-Body {  
-  font-family: Calibri, Helvetica, sans-serif;  
-    
-}  
-button {   
-       background-color: #ffffff;   
-       width: 100%;  
-        color: orange;   
-        padding: 15px;   
-        margin: 10px 0px;   
-        border: none;   
-        cursor: pointer;   
-         }   
-  
- input[type=text], input[type=password] {   
-        width: 100%;   
-        margin: 8px 0;  
-        padding: 12px 20px;   
-        display: inline-block;   
-        border: 2px solid rgb(255, 255, 255);   
-        box-sizing: border-box;   
-    }  
- button:hover {   
-        opacity: 0.7;   
-    }   
-    .column {
-      float: left;
-      width: 50%;
-    }
-
-    /* Clear floats after the columns */
-    .row:after {
-      content: "";
-      display: table;
-      clear: both;
-    }
-  .cancelbtn {   
-        width: auto;   
-        padding: 10px 18px;  
-        margin: 10px 5px;  
-    }   
-        
-     
- .container {   
-  
-        margin: 0 auto;
-        width: 200px;
-        padding: 25px;   
-        background-color: rgb(255, 255, 255);  
-        top: 50%
-    }   
-</style>   
-</head>    
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Login</title>
+</head>
 <body>
-  <div class = "row">
-    <div class = "column">
-      <h1>
-        Welcome
-      </h1>
-    </div>
-    <div class= "column" style = "background-color: rgb(77, 107, 209)">
-      <center> <h1 class = "container">Sign in</h1>
-        <form>  
-            <div class="container"> 
-                <input type="text" placeholder="Username" name="username" value="{{ request.form.password }}" required> 
-                <input type="password" placeholder="Password" name="password" value="{{ request.form.password }}" required>  
-                <input class="btn btn-default" type="submit" value="Login">
-            </div>   
-        </form>    
-      </center>    
-    </div>
-  </div>
-    
-</body>     
+	<div class="container" id="container">
+		<div class="form-container log-in-container">
+			<form action="" method = "post">
+				<h1>Login</h1>
+				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
+				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+				<a href={{url_for('pass_reset')}}>Forgot your password?</a>
+				<input class = "button_login" type="submit" value="Login">
+			</form>
+      {% if error %}
+        <p class="error"><strong>Error:</strong> {{ error }}
+      {% endif %}
+		</div>
+		<div class="overlay-container">
+			<div class="overlay">
+				<div class="overlay-panel overlay-right">
+					<h1>My Blogger Space</h1>
+					<p>We need more users please sign in :(</p>
+				</div>
+			</div>
+		</div>
+	</div>
+</body>
 </html>

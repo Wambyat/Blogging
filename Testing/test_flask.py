@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template
 
 app = Flask(__name__)
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 login_check = 0
 
 
@@ -31,7 +32,8 @@ def login():
         return render_template('login.html', error = error)
 
 def redir_to_login():
-    print("here")
+    print("here OOOOOOOOOOOOOGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAA") #Changing this print statement fixed the code for some reason?
+    return redirect(url_for('login'))
     
 
 @app.route('/blog/<int:blogID>/')
@@ -58,9 +60,14 @@ def profile(name):
 @app.route('/')
 def home_page():
     if login_check == 0:
-        redir_to_login()
+        return redir_to_login()
     else:
         return " This is home" 
+
+@app.route('/passreset/')
+def pass_reset():
+    return "This is the password reset page"
+
 
 if __name__ == '__main__':
     app.debug = True
