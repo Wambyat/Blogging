@@ -7,7 +7,7 @@
 </head>
 <body>
 	<div class="container" id="container">
-		<div class="form-container log-in-container">
+		<div class="form-container">
 			<form action="" method = "post">
 				<h1>Login</h1>
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
@@ -15,13 +15,13 @@
 				<a href={{url_for('pass_reset')}}>Forgot your password?</a>
 				<input class = "button_login" type="submit" value="Login">
 			</form>
-      {% if error %}
-        <p class="error"><strong>Error:</strong> {{ error }}
-      {% endif %}
+      		{% if error %}
+        		<p class="error">Error: {{ error }} </p>
+      		{% endif %}
 		</div>
 		<div class="overlay-container">
 			<div class="overlay">
-				<div class="overlay-panel overlay-right">
+				<div class="overlay-panel">
 					<h1>My Blogger Space</h1>
 					<p>We need more users please sign in :(</p>
 				</div>
