@@ -14,11 +14,14 @@
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
 				<a href={{url_for('pass_reset')}}>Forgot your password?</a>
 				<a href={{url_for('signup')}}>Don't have an account?</a>
+				{% if error == 'Invalid Credentials. Try again' %}
+				<p class = "error_p">{{ error }}</p>
+				{% else %}
+				<a>{{error}}</a>
+				{% endif %}
 				<input class = "button_login" type="submit" value="Login">
 			</form>
-      		{% if error %}
-        		<p class="error">Error: {{ error }} </p>
-      		{% endif %}
+        	
 		</div>
 		<div class="overlay-container">
 			<div class="overlay">
