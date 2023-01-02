@@ -64,9 +64,9 @@ def home_page():
     else:
         return " This is home" 
 
-@app.route('/passreset/')
+@app.route('/passreset/',methods = ['POST','GET'])
 def pass_reset():
-    return "This is the password reset page"
+    return render_template('passreset.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
