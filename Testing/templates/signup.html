@@ -9,11 +9,10 @@
 	<div class="container" id="container">
 		<div class="form-container">
 			<form action="" method = "post">
-				<h1>Login</h1>
+				<h1>Sign Up</h1>
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
-				<a href={{url_for('pass_reset')}}>Forgot your password?</a>
-				<a href={{url_for('signup')}}>Don't have an account?</a>
+				<a href={{url_for('login')}}>Login Instead?</a>
 				<input class = "button_login" type="submit" value="Login">
 			</form>
       		{% if error %}

@@ -33,9 +33,9 @@ p {
 
 a {
 	color: #333;
-	font-size: 20px;
+	font-size: 17px;
 	text-decoration: none;
-	margin: 15px 0;
+	margin: 5px 0;
 }
 
 /* text decoration to remove the underline*/
@@ -67,7 +67,7 @@ input {
 	border-radius: 15px;
 	background-color: #6b2bff;
 	color: #FFFFFF;
-	font-size: 20px;
+	font-size: 23px;
 	font-weight: bold;
 	padding: 12px 45px;
 	letter-spacing: 1px;

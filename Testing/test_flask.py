@@ -31,6 +31,15 @@ def login():
 
         return render_template('login.html', error = error)
 
+
+@app.route('/passreset/',methods = ['POST','GET'])
+def pass_reset():
+    return render_template('passreset.html')
+
+@app.route('/signup/',methods = ['POST','GET'])
+def signup():
+    return render_template('signup.html')
+
 def redir_to_login():
     print("here OOOOOOOOOOOOOGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAA") #Changing this print statement fixed the code for some reason?
     return redirect(url_for('login'))
@@ -63,10 +72,6 @@ def home_page():
         return redir_to_login()
     else:
         return " This is home" 
-
-@app.route('/passreset/',methods = ['POST','GET'])
-def pass_reset():
-    return render_template('passreset.html')
 
 @app.errorhandler(404)
 def page_not_found(e):
