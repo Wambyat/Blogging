@@ -45,11 +45,11 @@ def blog_disp(blogID):
 @app.route("/home/<int:var1>/")
 def home(var1):
     if login_check == 0:
-        redir_to_login()
-    if var1 > 50:
+        return redir_to_login()
+    elif var1 > 50:
         return redirect(url_for('blog_disp',blogID = var1))
     else:
-        return "Wow this works?"
+        return "Wow this works?"+str(login_check)
 
 @app.route('/profile/<name>/')
 def profile(name):
@@ -68,6 +68,9 @@ def home_page():
 def pass_reset():
     return "This is the password reset page"
 
+@app.errorhandler(404)
+def page_not_found(e):
+    return "WOW 404"
 
 if __name__ == '__main__':
     app.debug = True
