@@ -4,12 +4,12 @@ import sqlite3
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 login_check = 0
-curr_user = ""
+curr_user = "default"
 
 #TODO logout page, password reset and sign up logic and final htmls
 
 #################################################
-#              SQL functions                    #
+#*             SQL functions                    #
 #################################################
 #This function will take table name and required column as input. It will return a list of all values in that column.
 def sql_query(tbl , col):
@@ -40,11 +40,11 @@ def sql_query(tbl , col):
 
 
 #################################################
-#          Login related functions              #
+#*          Login related functions             #
 #################################################
 
 
-#LOGIN PAGE
+#*LOGIN PAGE
 
 @app.route('/login/',methods = ['POST','GET'])
 def login():
@@ -55,12 +55,15 @@ def login():
     global login_check
     global curr_user
 
+    print("Login check" +  str(login_check))
+
     if login_check == 1:
 
-        return render_template('logout.html', username = curr_user)
+        print("ogga")
+        return redir_to_logout()
 
     if request.method == 'POST':
-        
+
         user_names = sql_query("user_info","name")
 
         if type("abc") == type(user_names):
@@ -113,24 +116,82 @@ def login():
         return render_template('login.html', error = error)
 
 #################################################
-#PASSWORD RESET PAGE
+
+#*LOGOUT PAGE
+
+@app.route('/logout/',methods = ['POST','GET'])
+def logout():
+
+    global login_check
+    global curr_user
+
+    print("Pain is gay")
+
+    if login_check == 0:
+
+        return redir_to_login()
+
+    if request.method == 'POST':
+
+        if "logout" in request.form:
+                
+            login_check = 0
+            curr_user = ""
+
+            return redirect(url_for('login'))
+
+    return render_template('logout.html', username = curr_user)
+
+
+#################################################
+
+#*PASSWORD RESET PAGE
 
 @app.route('/passreset/',methods = ['POST','GET'])
 def pass_reset():
 
-    error = ""
+    error = "Please enter the new password"
+    username = ""
 
     if request.method == 'POST':
 
-        username = request.form['username']
-        password = request.form['password']
-        password2 = request.form['password2']
+        error = "Please enter the new password"
+        username = ""
 
-        if password == password2:
-            #sql part
+        try:
+
+            username = request.form['username']
+            password = request.form['password']
+            password2 = request.form['password2']
+
+        except:
+
             pass
-        else:
-            error = "Passwords do not match"
+
+        if username != "":        
+
+            if password == password2:
+
+                try:
+
+                    query = "UPDATE user_info SET password = '"+str(password)+"' WHERE name = '"+str(username)+"'"
+                    conn = sqlite3.connect('test.db')
+                    cursor = conn.cursor()
+                    cursor.execute(query)
+                    conn.commit()
+                    conn.close()
+
+                    print("Password changed")
+                    error = "Password changed successfully"
+
+
+                except Exception as e:
+
+                    error = "Please enter credentials correctly"
+
+            else:
+
+                error = "Passwords do not match"
 
     return render_template('passreset.html', error = error)
 
@@ -140,14 +201,86 @@ def pass_reset():
 @app.route('/signup/',methods = ['POST','GET'])
 def signup():
 
+    error = "Enter your desired username and password"
+    print("Sign up here")
+
+    global login_check
+    global curr_user
+
+    print("Login check" +  str(login_check))
+
+    if login_check == 1:
+
+        return redir_to_logout()
+
+    if request.method == 'POST':
+
+        user_names = sql_query("user_info","name")
+
+        if type("abc") == type(user_names):
+            print(user_names)
+
+        else:
+
+            #This formats the result into a list of strings
+            user_names = [j for i in user_names for j in i]
+        
+        
+        passwords = sql_query("user_info","password")
+
+        if type("abc") == type(passwords):
+            print(passwords)
+
+        else:
+            #This formats the result into a list of strings
+            passwords = [j for i in passwords for j in i]
+        
+        user  = ""
+        password = ""
+
+        print("posting")
+        try:
+            user = request.form['username']
+            password = request.form['password']
+        except:
+            pass
+
+        if user != "":
+
+            if user in user_names and password == passwords[user_names.index(user)]:
+
+                #Login success
+                login_check = 1
+                curr_user = user
+                print("login changed")
+
+                return redirect(url_for('profile',name = user))
+            
+            else:
+
+                error = 'Invalid Credentials. Try again'
+
+                return render_template('login.html', error = error)
+            
+    else:
+
+        return render_template('login.html', error = error)
+
     return render_template('signup.html')
+
+
+#*REDIRECTOR FUNCTION (for login)
 
 def redir_to_login():
 
-    print("here OOOOOOOOOOOOOGGGGGGGGGGGGGAAAAAAAAAAAAAAAAAAAAA") #Changing this print statement fixed the code for some reason?
-
     return redirect(url_for('login'))
     
+
+#*REDIRECTOR FUNCTION (for logout)
+
+def redir_to_logout():
+    print(" booga")
+    return redirect(url_for('logout',username = curr_user))
 
 ######################################################################################################################
 
