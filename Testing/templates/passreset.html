@@ -12,7 +12,12 @@
 				<h1 style="font-size: 35px;">Password Reset</h1>
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
-                <input type="password" placeholder="Repeat Password" name="password" value="{{ request.form.password }}">
+                <input type="password" placeholder="Repeat Password" name="password2" value="{{ request.form.password }}">
+				{% if error == "Passwords do not  match" %}
+				<p class = "error_p">{{ error }}</p>
+				{% else %}
+				<p> Please enter new password</p>
+				{% endif %}
 				<a href={{url_for('login')}}>Back to login</a>
 				<input class = "button_login" type="submit" value="Reset Password" style="padding: 12px;">
 			</form>

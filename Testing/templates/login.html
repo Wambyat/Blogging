@@ -12,12 +12,14 @@
 				<h1>Login</h1>
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
-				<a href={{url_for('pass_reset')}}>Forgot your password?</a>
-				<a href={{url_for('signup')}}>Don't have an account?</a>
+				<span style="padding-top: 10px;">
+				<a href={{url_for('pass_reset')}}> Forgot your password? </a>
+				<a href={{url_for('signup')}}> Don't have an account? </a>
+				</span>
 				{% if error == 'Invalid Credentials. Try again' %}
 				<p class = "error_p">{{ error }}</p>
 				{% else %}
-				<a>{{error}}</a>
+				<a style="font-size: 20px; padding-top: 3px;">{{error}}</a>
 				{% endif %}
 				<input class = "button_login" type="submit" value="Login">
 			</form>
