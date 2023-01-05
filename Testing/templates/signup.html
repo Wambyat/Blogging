@@ -16,14 +16,17 @@
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
 
 				<a href={{url_for('login')}}>Login Instead?</a>
+				
+				{% if error == 'Username already exists' %}
+				<p class = "error_p">{{ error }}</p>
 
+				{% else %}
+				<a style="font-size: 20px; padding-top: 3px;">{{error}}</a>
+
+				{% endif %}
 				<input class = "button_login" type="submit" value="Login">
 
 			</form>
-
-      		{% if error %}
-        		<p class="error">Error: {{ error }} </p>
-      		{% endif %}
 
 		</div>
 
@@ -33,7 +36,7 @@
 
 					<h1>My Blogger Space</h1>
 					<p>We need more users please sign in :(</p>
-					
+
 				</div>
 			</div>
 		</div>

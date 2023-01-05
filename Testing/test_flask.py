@@ -6,7 +6,7 @@ app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 login_check = 0
 curr_user = "default"
 
-#TODO logout page, password reset and sign up logic and final htmls
+#TODO accept username and password through a function
 
 #################################################
 #*             SQL functions                    #
@@ -239,34 +239,43 @@ def signup():
         password = ""
 
         print("posting")
+
         try:
+
             user = request.form['username']
             password = request.form['password']
+
         except:
+
             pass
 
         if user != "":
 
-            if user in user_names and password == passwords[user_names.index(user)]:
+            if user not in user_names:
 
-                #Login success
-                login_check = 1
-                curr_user = user
-                print("login changed")
+                try:
 
-                return redirect(url_for('profile',name = user))
+                    query = "INSERT INTO user_info (name,password) VALUES ('"+str(user)+"','"+str(password)+"')"
+                    conn = sqlite3.connect('test.db')
+                    cursor = conn.cursor()
+                    cursor.execute(query)
+                    conn.commit()
+                    conn.close()
+
+                    login_check = 1
+                    curr_user = user
+
+                    return redirect(url_for('profile',name = user))
+                
+                except:
+                        
+                    error = "Username already exists"
             
             else:
+                    
+                    error = "Username already exists"
 
-                error = 'Invalid Credentials. Try again'
-
-                return render_template('login.html', error = error)
-            
-    else:
-
-        return render_template('login.html', error = error)
-
-    return render_template('signup.html')
+    return render_template('signup.html',error = error)
 
 
 #*REDIRECTOR FUNCTION (for login)
