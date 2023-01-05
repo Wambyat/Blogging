@@ -10,17 +10,14 @@
 		<div class="form-container">
 			<form action="" method = "post">
 
-				<h1>Login</h1>
+				<h1>Sign Up</h1>
 
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
 
-				<span style="padding-top: 10px;">
-				<a href={{url_for('pass_reset')}}> Forgot your password? </a>
-				<a href={{url_for('signup')}}> Don't have an account? </a>
-				</span>
-
-				{% if error == 'Invalid Credentials. Try again' %}
+				<a href={{url_for('login')}}>Login Instead?</a>
+				
+				{% if error == 'Username already exists' %}
 				<p class = "error_p">{{ error }}</p>
 
 				{% else %}
@@ -30,15 +27,16 @@
 				<input class = "button_login" type="submit" value="Login">
 
 			</form>
-        	
+
 		</div>
+
 		<div class="overlay-container">
 			<div class="overlay">
 				<div class="overlay-panel">
 
 					<h1>My Blogger Space</h1>
 					<p>We need more users please sign in :(</p>
-					
+
 				</div>
 			</div>
 		</div>

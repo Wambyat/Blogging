@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
+	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Password Reset</title>
+</head>
+<body>
+	<div class="container" id="container" style="width: 55vh;">
+		<div class="form-container" style="position: absolute; left: 15%; width: 70%;">
+			<form action="" method = "post" style="padding: 0;">
+
+				<h1 style="font-size: 35px;">Password Reset</h1>
+
+				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
+				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+                <input type="password" placeholder="Repeat Password" name="password2" value="{{ request.form.password }}">
+
+				{% if error == 'Passwords do not match' %}
+				<p class = "error_p" style = "font-size: 20 px; line-height: 0px;">{{ error }}</p>
+
+				{% elif error == 'Please enter credentials correctly' %}
+				<p class = "error_p" style = "font-size: 20 px; line-height: 0px;">{{ error }}</p>
+				
+				{% else %}
+				<a style="font-size: 20px; padding-top: 3px;">{{error}}</a>
+				
+				{% endif %}
+
+				<a href={{url_for('login')}}>Back to login</a>
+
+				<input class = "button_login" type="submit" value="Reset Password" style="padding: 12px;">
+
+			</form>
+		</div>
+	</div>
+</body>
+</html>

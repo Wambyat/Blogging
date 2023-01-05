@@ -1,24 +1,36 @@
 import sqlite3
 
-try:
+def sql_query(tbl , col):
+    
+    try:
 
-    conn = sqlite3.connect('test.db')
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        
+        print("\nConnecting to database\n")
 
-    cursor = conn.cursor()
-    print("\nConnecting to database\n")
+        query = "SELECT "+str(col)+" FROM "+str(tbl)
+        cursor.execute(query)
+        result = cursor.fetchall()
+        
+    except Exception as e:
 
-    query = "SELECT sql FROM sqlite_master WHERE type='table'"
-    cursor.execute(query)
-    result = cursor.fetchall()
-    for i in result:
-        print(i)
+        result = "Error"
 
-except Exception as e:
+    finally:
 
-    print(e)
+        conn.commit()
+        conn.close()
+        print("\nConnection closed\n")
+        return result
 
-finally:
+a = sql_query("user_info","name")
 
-    conn.commit()
-    conn.close()
-    print("\nConnection closed\n")
+if type("abc") == type(a):
+    print (a)
+
+else:
+    a = [j for i in a for j in i]
+    print(a)
+    if "John" in a:
+        print("John is in the list")
