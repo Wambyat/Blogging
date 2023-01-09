@@ -3,7 +3,7 @@
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Password Reset</title>
+	<title>Login</title>
 </head>
 <body>
 	<div class = "navbar"> 
@@ -13,16 +13,17 @@
 		<a href={{url_for('home')}}>Home</a>
 		</span>
 	</div>
-	<div class="container" id="container" style="width: 55vh;">
-		<div class="form-container" style="position: absolute; left: 15%; width: 70%;">
-			<form action="" method = "post" style="padding: 0;">
-
-				<h1 style="font-size: 35px;">You are logged in as {{username}}</h1>
-
-				<input class = "button_login" type="submit" name = "logout" value="Logout">
-
-			</form>
+	<div class = "blog">
+		<div class = "blog-content" style = "padding: 0px 30px;">
+			<h1 style="border: solid;">
+				Blog title
+			</h1>
+			<br>
+			<p>
+				lorem ipsum
+			</p>
 		</div>
+		
 	</div>
 </body>
 </html>

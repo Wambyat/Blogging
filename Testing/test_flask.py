@@ -288,7 +288,7 @@ def redir_to_login():
 #*REDIRECTOR FUNCTION (for logout)
 
 def redir_to_logout():
-    print(" booga")
+    
     return redirect(url_for('logout',username = curr_user))
 
 ######################################################################################################################
@@ -296,6 +296,14 @@ def redir_to_logout():
 #################################################
 #          Blog related functions               #
 #################################################
+
+#################################################
+#*                    BLOG PAGE                 #
+#################################################
+@app.route('/testblog/',methods = ['POST','GET'])
+def blog_test():
+    return render_template('blog.html')
+
 
 @app.route('/blog/<int:blogID>/')
 def blog_disp(blogID):
@@ -306,8 +314,9 @@ def blog_disp(blogID):
 
     return "This is blog " + str(blogID)
 
-@app.route("/home/<int:var1>/")
-def home(var1):
+@app.route("/home/")
+def home():
+    var1= 55
 
     if login_check == 0:
 
