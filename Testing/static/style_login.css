@@ -138,12 +138,14 @@ input {
 }
 
 .navbar {
+	box-shadow: 0 1px 10px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+	border-radius: 15px;
 	overflow: hidden;
 	position: fixed;
 	top: 0;
 	width: 100%;
 	background-color: #c7c0ee;
-	z-index: -2;
+
 }
 
 .navbar a {
@@ -158,11 +160,13 @@ input {
 	border-color: #c7c0ee;
 	border-radius: 18px;
 	font-size: 22px;
-	z-index: 20;
 }
 
 .megabooga{
 	padding: 0px 60px;
+	height: fit-content;
+	max-height: 80%;
+	width: fit-content;
 }
 
 .blog {

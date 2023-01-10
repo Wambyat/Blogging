@@ -1,8 +1,11 @@
 from flask import Flask, redirect, url_for, request, render_template
 import sqlite3
 
+UPLOAD_FOLDER = "static/uploads"
+
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_check = 0
 curr_user = "default"
 
