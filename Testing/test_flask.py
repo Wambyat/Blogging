@@ -13,6 +13,7 @@ login_check = 0
 curr_user = "default"
 
 #TODO accept username and password through a function
+#TODO make blog.html into a template type thingy and make it into a feed => make a user follow other people and give a few blogs in their names.
 
 #################################################
 #*             SQL functions                    #
