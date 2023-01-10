@@ -1,11 +1,14 @@
 from flask import Flask, redirect, url_for, request, render_template
 import sqlite3
+import os
 
-UPLOAD_FOLDER = "static/uploads"
+PEOPLE_FOLDER = os.path.join('static', 'uploads')
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
-app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
+
+app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
+
 login_check = 0
 curr_user = "default"
 
@@ -305,7 +308,9 @@ def redir_to_logout():
 #################################################
 @app.route('/testblog/',methods = ['POST','GET'])
 def blog_test():
-    return render_template('blog.html')
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+    print(full_filename)
+    return render_template('blog.html', logo_path = "..\\"+full_filename)
 
 
 @app.route('/blog/<int:blogID>/')

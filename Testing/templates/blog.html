@@ -3,16 +3,18 @@
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
 	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Login</title>
+	<title>Feed
+	</title>
 </head>
 <body>
 	<div class = "navbar"> 
-		<span>
+
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-		<img src = "C:\\School Files\\Lab_Records\\IIT_Stuff\\MAD1_Project\\MAD-1-Project\\Testing\\icon.png">
-		</span>
+		<div class = "logo-div">
+		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		</div>
 	</div>
 	<div class = "megabooga">
 		<div class = "blog">
