@@ -11,6 +11,7 @@ app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 
 login_check = 0
 curr_user = "default"
+curr_user_id = 0
 
 #TODO accept username and password through a function
 #TODO make blog.html into a template type thingy and make it into a feed => make a user follow other people and give a few blogs in their names.
@@ -304,13 +305,13 @@ def redir_to_logout():
 #          Blog related functions               #
 #################################################
 
+
 #################################################
 #*                    BLOG PAGE                 #
 #################################################
 @app.route('/testblog/',methods = ['POST','GET'])
 def blog_test():
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
-    print(full_filename)
     return render_template('blog.html', logo_path = "..\\"+full_filename)
 
 
