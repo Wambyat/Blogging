@@ -332,35 +332,44 @@ def redir_to_logout():
 
 
 #################################################
-#                    BLOG PAGE                 #
+#*               (test) BLOG PAGE               #
 
 @app.route('/testblog/',methods = ['POST','GET'])
 def blog_test():
+
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+
     return render_template('blog.html', logo_path = "..\\"+full_filename)
 
+#################################################
+#*                 Main feed                    #
 @app.route('/feed/',methods = ['POST','GET'])
 def feed():
+
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
     #create the blogs here
     feed_con = ""
 
     #query to get blogs of users that the current user follows
-    query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = 1 )"
+    query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user_id)+")"
+    #+str(curr_user_id)+")"
+
     temp = sql_dir(query1)
-    
     res=[]
+
     for i in temp:
         res.append([j for j in i])
 
     res_content=[i[3] for i in res]
     res_titles=[i[1] for i in res]
-    print(res_content)
-    print(res_titles)
-    #TODO GET AUTHOR AND PUT INTO FEED AND MAKE IT A LINK
+    res_authors = [i[2] for i in res]
 
-    return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content)
+    query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
+    res_authors = sql_dir(query)
+    res_authors= [j for i in res_authors for j in i]
+
+    return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content,res3=res_authors)
 
 @app.route('/blog/<int:blogID>/')
 def blog_disp(blogID):
@@ -387,12 +396,10 @@ def home():
 
         return "Wow this works?"+str(login_check)
 
+############################
+#*    profile page         #
 @app.route('/profile/<name>/')
 def profile(name):
-
-    if login_check == 0:
-
-        return redirect(url_for('login'))
 
     return "Hello " + name + str(login_check)
 
