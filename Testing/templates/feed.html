@@ -17,20 +17,26 @@
 		</div>
 	</div>
 	<div class = "megabooga">
+		{% for row in res1  %}
+		{% set titl = res1[loop.index-1] %}
+		
 		<div class = "blog">
 			<div class = "blog-content">
 				<div style = "padding-top: 18px;">
-				<h1 class="button_login" style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0; font-size: 48px;">
-					Blog title
+				<h1 class="button_login" style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0;">
+					{{titl}}
 				</h1>
-				<a style="display: inline; margin: 0; font-size: 20px;"> author </a>
+				{% set author = res3[loop.index-1] %}
+				<a href={{ url_for('profile' , name = author) }} style="display: inline; margin: 0;"> {{author}} </a>
 				</div>
 				<hr size="2" width = "98%" color = "black" >
-				<p style="font-size: 25px;">
-					lorem ipsum ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum uno 
+				{% set dets = res2[loop.index-1] %}
+				<p>
+					{{dets}}
 				</p>
 			</div>
 		</div>
+		{% endfor %}
 	</div>
 </body>
 </html>
