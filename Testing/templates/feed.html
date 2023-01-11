@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
+	<link rel = "stylesheet" href = "https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+	<title>Feed</title>
+	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
+</head>
+<body>
+	<div class = "navbar"> 
+
+		<a href={{url_for('logout')}}>Logout</a>
+		<a href={{url_for('login')}}>Login/Sign Up</a>
+		<a href={{url_for('home')}}>Home</a>
+		<div class = "logo-div">
+		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		</div>
+	</div>
+	<div class = "megabooga">
+		{{content_feed}}
+	</div>
+</body>
+</html>

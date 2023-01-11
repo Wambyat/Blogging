@@ -46,13 +46,33 @@ finally:
     conn.close()
     print("\nConnection closed\n")
 
-a = sql_query("user_follow","user_id")
+def sql_dir(query1):
 
-if type("abc") == type(a):
-    print (a)
+    try:
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        
+        print("\nConnecting to database\n")
 
-else:
-    a = [j for i in a for j in i]
-    print(a)
-    if "John" in a:
-        print("John is in the list")
+        cursor.execute(query1)
+        result = cursor.fetchall()
+        
+    except Exception as e:
+
+        result = "Error"
+
+    finally:
+
+        conn.commit()
+        conn.close()
+        print("\nConnection closed\n")
+
+        return result
+
+curr_user = 1
+query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user)+")"
+temp = sql_dir(query1)
+res=[]
+for i in temp:
+    res.append([j for j in i])
+print(res)
