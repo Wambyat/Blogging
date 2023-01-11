@@ -1,6 +1,7 @@
 from flask import Flask, redirect, url_for, request, render_template
 import sqlite3
 import os
+from test_db import *
 
 PEOPLE_FOLDER = os.path.join('static', 'uploads')
 
@@ -11,7 +12,7 @@ app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 
 login_check = 0
 curr_user = "default"
-curr_user_id = 0
+curr_user_id = 1
 
 #TODO accept username and password through a function
 #TODO make blog.html into a template type thingy and make it into a feed => make a user follow other people and give a few blogs in their names.
@@ -21,52 +22,53 @@ curr_user_id = 0
 #*################################################
 
 #This function will take table name and required column as input. It will return a list of all values in that column.
-def sql_query(tbl , col):
+
+# def sql_query(tbl , col):
     
-    try:
-        conn = sqlite3.connect('test.db')
-        cursor = conn.cursor()
+#     try:
+#         conn = sqlite3.connect('test.db')
+#         cursor = conn.cursor()
         
-        print("\nConnecting to database\n")
+#         print("\nConnecting to database\n")
 
-        query = "SELECT "+str(col)+" FROM "+str(tbl)
-        cursor.execute(query)
-        result = cursor.fetchall()
+#         query = "SELECT "+str(col)+" FROM "+str(tbl)
+#         cursor.execute(query)
+#         result = cursor.fetchall()
         
-    except Exception as e:
+#     except Exception as e:
 
-        result = "Error"
+#         result = "Error"
 
-    finally:
+#     finally:
 
-        conn.commit()
-        conn.close()
-        print("\nConnection closed\n")
-        return result
+#         conn.commit()
+#         conn.close()
+#         print("\nConnection closed\n")
+#         return result
 #####################################################################################################################
 
-def sql_dir(query1):
+# def sql_dir(query1):
 
-    try:
-        conn = sqlite3.connect('test.db')
-        cursor = conn.cursor()
+#     try:
+#         conn = sqlite3.connect('test.db')
+#         cursor = conn.cursor()
         
-        print("\nConnecting to database\n")
+#         print("\nConnecting to database\n")
 
-        cursor.execute(query1)
-        result = cursor.fetchall()
+#         cursor.execute(query1)
+#         result = cursor.fetchall()
         
-    except Exception as e:
+#     except Exception as e:
 
-        result = "Error"
+#         result = "Error"
 
-    finally:
+#     finally:
 
-        conn.commit()
-        conn.close()
-        print("\nConnection closed\n")
+#         conn.commit()
+#         conn.close()
+#         print("\nConnection closed\n")
 
-        return result
+#         return result
 
 
 #*################################################
@@ -131,6 +133,7 @@ def login():
                 #Login success
                 login_check = 1
                 curr_user = user
+                curr_user_id = user_names.index(user)
                 print("login changed")
 
                 return redirect(url_for('profile',name = user))
@@ -344,15 +347,20 @@ def feed():
     feed_con = ""
 
     #query to get blogs of users that the current user follows
-    query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user)+")"
+    query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = 1 )"
     temp = sql_dir(query1)
     
     res=[]
     for i in temp:
         res.append([j for j in i])
 
+    res_content=[i[3] for i in res]
+    res_titles=[i[1] for i in res]
+    print(res_content)
+    print(res_titles)
+    #TODO GET AUTHOR AND PUT INTO FEED AND MAKE IT A LINK
 
-    return render_template('feed.html',logo_path = "..\\"+full_filename,content_feed = feed_con)
+    return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content)
 
 @app.route('/blog/<int:blogID>/')
 def blog_disp(blogID):

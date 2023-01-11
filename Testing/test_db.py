@@ -3,7 +3,6 @@ import sqlite3
 def sql_query(tbl , col):
     
     try:
-
         conn = sqlite3.connect('test.db')
         cursor = conn.cursor()
         
@@ -24,35 +23,13 @@ def sql_query(tbl , col):
         print("\nConnection closed\n")
         return result
 
-
-try:
-
-        conn = sqlite3.connect('test.db')
-        cursor = conn.cursor()
-        
-        print("\nConnecting to database\n")
-
-        query = ""
-        cursor.execute(query)
-        result = cursor.fetchall()
-        
-except Exception as e:
-
-    result = "Error"
-
-finally:
-
-    conn.commit()
-    conn.close()
-    print("\nConnection closed\n")
-
 def sql_dir(query1):
 
     try:
         conn = sqlite3.connect('test.db')
         cursor = conn.cursor()
         
-        print("\nConnecting to database\n")
+        print("\nConnecting to database nyan\n")
 
         cursor.execute(query1)
         result = cursor.fetchall()
@@ -75,4 +52,7 @@ temp = sql_dir(query1)
 res=[]
 for i in temp:
     res.append([j for j in i])
-print(res)
+
+for i in res:
+    print(i[1])
+    print(i[3])
