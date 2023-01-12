@@ -2,16 +2,19 @@
 <html>
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Password Reset</title>
 </head>
 <body>
 	<div class = "navbar"> 
-		<span>
+
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-		</span>
+		
+		<div class = "logo-div">
+		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		</div>
+
 	</div>
 	<div class="container" id="container" style="width: 55vh;">
 		<div class="form-container" style="position: absolute; left: 15%; width: 70%;">

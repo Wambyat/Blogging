@@ -12,63 +12,10 @@ app.config['UPLOAD_FOLDER'] = PEOPLE_FOLDER
 
 login_check = 0
 curr_user = "default"
-curr_user_id = 1
+curr_user_id = 0
 
 #TODO accept username and password through a function
-#TODO make blog.html into a template type thingy and make it into a feed => make a user follow other people and give a few blogs in their names.
-
-#*################################################
-#*              SQL functions                    #
-#*################################################
-
-#This function will take table name and required column as input. It will return a list of all values in that column.
-
-# def sql_query(tbl , col):
-    
-#     try:
-#         conn = sqlite3.connect('test.db')
-#         cursor = conn.cursor()
-        
-#         print("\nConnecting to database\n")
-
-#         query = "SELECT "+str(col)+" FROM "+str(tbl)
-#         cursor.execute(query)
-#         result = cursor.fetchall()
-        
-#     except Exception as e:
-
-#         result = "Error"
-
-#     finally:
-
-#         conn.commit()
-#         conn.close()
-#         print("\nConnection closed\n")
-#         return result
-#####################################################################################################################
-
-# def sql_dir(query1):
-
-#     try:
-#         conn = sqlite3.connect('test.db')
-#         cursor = conn.cursor()
-        
-#         print("\nConnecting to database\n")
-
-#         cursor.execute(query1)
-#         result = cursor.fetchall()
-        
-#     except Exception as e:
-
-#         result = "Error"
-
-#     finally:
-
-#         conn.commit()
-#         conn.close()
-#         print("\nConnection closed\n")
-
-#         return result
+#TODO make a profile page
 
 
 #*################################################
@@ -81,11 +28,14 @@ curr_user_id = 1
 @app.route('/login/',methods = ['POST','GET'])
 def login():
 
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+
     error = "We have Over 10 Users!"
     print("Login here")
 
     global login_check
     global curr_user
+    global curr_user_id
 
     print("Login check" +  str(login_check))
 
@@ -133,7 +83,10 @@ def login():
                 #Login success
                 login_check = 1
                 curr_user = user
-                curr_user_id = user_names.index(user)
+                print(user)
+                curr_user_id = user_names.index(user)+1
+                print(user_names.index(user))
+                print(curr_user_id)
                 print("login changed")
 
                 return redirect(url_for('profile',name = user))
@@ -142,11 +95,11 @@ def login():
 
                 error = 'Invalid Credentials. Try again'
 
-                return render_template('login.html', error = error)
+                return render_template('login.html', error = error,logo_path = "..\\"+full_filename)
             
     else:
 
-        return render_template('login.html', error = error)
+        return render_template('login.html', error = error,logo_path = "..\\"+full_filename)
 
 #################################################
 
@@ -154,6 +107,8 @@ def login():
 
 @app.route('/logout/',methods = ['POST','GET'])
 def logout():
+
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
     global login_check
     global curr_user
@@ -173,7 +128,7 @@ def logout():
 
             return redirect(url_for('login'))
 
-    return render_template('logout.html', username = curr_user)
+    return render_template('logout.html', username = curr_user,logo_path = "..\\"+full_filename)
 
 
 #################################################
@@ -182,6 +137,8 @@ def logout():
 
 @app.route('/passreset/',methods = ['POST','GET'])
 def pass_reset():
+
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
     error = "Please enter the new password"
     username = ""
@@ -226,13 +183,15 @@ def pass_reset():
 
                 error = "Passwords do not match"
 
-    return render_template('passreset.html', error = error)
+    return render_template('passreset.html', error = error,logo_path = "..\\"+full_filename)
 
 
 #*SIGN UP PAGE
 
 @app.route('/signup/',methods = ['POST','GET'])
 def signup():
+
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
     error = "Enter your desired username and password"
     print("Sign up here")
@@ -308,7 +267,7 @@ def signup():
                     
                     error = "Username already exists"
 
-    return render_template('signup.html',error = error)
+    return render_template('signup.html',error = error,logo_path = "..\\"+full_filename)
 
 
 #*REDIRECTOR FUNCTION (for login)
@@ -332,19 +291,20 @@ def redir_to_logout():
 
 
 #################################################
-#*               (test) BLOG PAGE               #
+#*               (testing page)                 #
 
-@app.route('/testblog/',methods = ['POST','GET'])
-def blog_test():
-
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
-
-    return render_template('blog.html', logo_path = "..\\"+full_filename)
+@app.route('/test/',methods = ['POST','GET'])
+def test():
+    return render_template('profile.html')
 
 #################################################
 #*                 Main feed                    #
+
 @app.route('/feed/',methods = ['POST','GET'])
 def feed():
+
+    if login_check == 0:
+        return redir_to_login()
 
     full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
@@ -353,21 +313,29 @@ def feed():
 
     #query to get blogs of users that the current user follows
     query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user_id)+")"
-    #+str(curr_user_id)+")"
+    print(query1)
 
     temp = sql_dir(query1)
     res=[]
 
     for i in temp:
         res.append([j for j in i])
+    
+    print(res)
+    if res == []:
+        res_content = ["You don't follow anyone."]
+        res_titles = ["Please search for users!"]
+        res_authors = ["- The team"]
 
-    res_content=[i[3] for i in res]
-    res_titles=[i[1] for i in res]
-    res_authors = [i[2] for i in res]
+    else:
 
-    query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
-    res_authors = sql_dir(query)
-    res_authors= [j for i in res_authors for j in i]
+        res_content=[i[3] for i in res]
+        res_titles=[i[1] for i in res]
+        res_authors = [i[2] for i in res]
+
+        query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
+        res_authors = sql_dir(query)
+        res_authors= [j for i in res_authors for j in i]
 
     return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content,res3=res_authors)
 
@@ -376,7 +344,7 @@ def blog_disp(blogID):
 
     if login_check == 0:
 
-        redir_to_login()
+        return redir_to_login()
 
     return "This is blog " + str(blogID)
 
