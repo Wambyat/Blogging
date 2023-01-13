@@ -11,11 +11,14 @@
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-
-		<div class = "logo-div">
-		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
-		</div>
+		<img  src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 		
+		<form style= "width: fit-content; height: 10px; display: inline-block; background-color: #c7c0ee; padding: 10px;" action = "" method="post">
+			<input style = "height: 60%; margin-top:  0;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+			<div class = "logo-div">
+			</div>
+		</form>
+
 	</div>
 	<div class = "megabooga">
 		{% for row in res1  %}

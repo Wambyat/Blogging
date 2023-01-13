@@ -14,5 +14,11 @@ INSERT INTO blog_fav VALUES (1, 1);
 
 DELETE FROM user_info WHERE id > 4;
 DELETE FROM user_addi WHERE uuid > 4;
+DELETE FROM blog_info WHERE uid = 1;
+
+ROLLBACK;
 
 SELECT sql FROM sqlite_master WHERE type='table';
+
+INSERT INTO blog_info VALUES (4, 'Wow im helping test the website !! )w)', 1, 'This a super long long mainly made to test. how this websote renders it. Hmmm im not really sure wat to put here. I wonder how many people weill ever see this? Wow that makes me kinda ssad. So many things are lost to the eternity. No way of ever knowing if legacy will ever live. Even a vile man like Hitker will be forgotten one day. In that case the sooner the better. Then again im not sure if that is a good idea.');
+

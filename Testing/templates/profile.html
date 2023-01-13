@@ -4,7 +4,7 @@
 
 <head>
 	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
-	<title>Feed</title>
+	<title>{{username}}'s profile</title>
 	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
 
 </head>
@@ -16,31 +16,40 @@
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
+		
 		<div class = "logo-div">
 		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 		</div>
+
 	</div>
 
-	<div class = "megabooga">
+	<div class="container" id="container" style="width: 50%;">
 
-		<div class = "blog">
-			<div class = "blog-content">
-				<div style = "padding-top: 18px;">
-				<h1 class="button_login" style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0; font-size: 48px;">
-					{{username}}
-				</h1>
-				<a style="display: inline; margin: 0; font-size: 20px;"> author </a>
-				</div>
-				<hr size="2" width = "98%" color = "black" >
-				<p style="font-size: 25px;">
-					lorem ipsum ipsum lorem ipsum lorem ipsum lorem ipsum lorem ipsum uno 
-				</p>
-			</div>
+		<div class="form-container">
+			<form action="" method = "post" style="width: fit-content;">
+
+				<h1 style="font-size: 100px;">{{username}}</h1>
+
+
+			</form>
+        	
 		</div>
 
+		<div class="overlay-container">
+			<div class="overlay" >
+				<div class="overlay-panel" style="width: 60%;">
+
+					<h1>{{about}}</h1>
+					<p>I am {{age}} years old</p>
+					
+				</div>
+			</div>
+
+		</div>
 	</div>
+
 	
-	<div class = "megabooga">
+	<div class = "megabooga" style="max-width: 45%;">
 
 		{% for row in res1  %}
 		{% set titl = res1[loop.index-1] %}

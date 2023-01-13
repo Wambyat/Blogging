@@ -142,8 +142,8 @@ input {
 	border-radius: 15px;
 	overflow: hidden;
 	position: fixed;
+	min-width: 483px;
 	top: 0;
-	width: 100%;
 	background-color: #c7c0ee;
 
 }

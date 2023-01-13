@@ -19,6 +19,7 @@
 		</div>
 
 	</div>
+	
 	<div class="container" id="container">
 
 		<div class="form-container">
@@ -29,8 +30,10 @@
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
 
-				<input type = "text" placeholder = "Age" name = "age" value = "{{ request.form.age }}" style="display: inline;">
-				<input type = "text" placeholder = "About you :)" name = "about" value = "{{ request.form.about }}">
+				<span>
+				<input style="width: 20%; display: inline;" type = "text" placeholder = "Age" name = "age" value = "{{ request.form.age }}">
+				<input style = "width:70%;" type = "text" placeholder = "About you :)" name = "about" value = "{{ request.form.about }}">
+				</span>
 
 				<a href={{url_for('login')}}>Login Instead?</a>
 				
@@ -52,7 +55,7 @@
 				<div class="overlay-panel">
 
 					<h1>My Blogger Space</h1>
-					<p>We need more users please sign in :(</p>
+					<p>We need more users please sign up :(</p>
 
 				</div>
 			</div>
