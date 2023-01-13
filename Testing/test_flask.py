@@ -89,7 +89,7 @@ def login():
                 print(curr_user_id)
                 print("login changed")
 
-                return redirect(url_for('profile',name = user))
+                return redirect(url_for('feed'))
             
             else:
 
@@ -236,6 +236,8 @@ def signup():
 
             user = request.form['username']
             password = request.form['password']
+            age = request.form['age']
+            about = request.form['about']
 
         except:
 
@@ -247,11 +249,18 @@ def signup():
 
                 try:
 
-                    query = "INSERT INTO user_info (name,password) VALUES ('"+str(user)+"','"+str(password)+"')"
+                    print("here")
+                    
+                    query = "INSERT INTO user_info VALUES ("+str(uid)+",'"+str(user)+"','"+str(password)+"')"
                     conn = sqlite3.connect('test.db')
                     cursor = conn.cursor()
                     cursor.execute(query)
                     conn.commit()
+
+                    query = "INSERT INTO user_addi VALUES ("+str(uid)+","+str(age)+",'"+about+"')"
+                    cursor.execute(query)
+                    conn.commit()
+
                     conn.close()
 
                     login_check = 1
@@ -326,27 +335,36 @@ def feed():
         res_content = ["You don't follow anyone."]
         res_titles = ["Please search for users!"]
         res_authors = ["- The team"]
+        res_bid = [6]
 
     else:
 
-        res_content=[i[3] for i in res]
+        res_bid = [i[0] for i in res]
         res_titles=[i[1] for i in res]
         res_authors = [i[2] for i in res]
+        res_content=[i[3] for i in res]        
 
         query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
         res_authors = sql_dir(query)
         res_authors= [j for i in res_authors for j in i]
 
-    return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content,res3=res_authors)
+    return render_template('feed.html',logo_path = "..\\"+full_filename,res1 = res_titles ,res2=res_content,res3=res_authors,res4 = res_bid)
 
 @app.route('/blog/<int:blogID>/')
-def blog_disp(blogID):
+def blog(blogID):
 
-    if login_check == 0:
+    # if login_check == 0:
 
-        return redir_to_login()
+    #     return redir_to_login()
+    
+    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
 
-    return "This is blog " + str(blogID)
+    query = "SELECT * FROM blog_info WHERE bid ="+str(blogID)
+    res=sql_dir(query)
+    res = [j for i in res for j in i]
+    res1 = "admin"
+
+    return render_template('blog.html',logo_path  = "..\\"+full_filename,id = res[0],titl = res[1], author = res1,dets = res[3]  )
 
 @app.route("/home/")
 def home():
@@ -366,10 +384,26 @@ def home():
 
 ############################
 #*    profile page         #
+
 @app.route('/profile/<name>/')
 def profile(name):
 
-    return "Hello " + name + str(login_check)
+    #Getting the user id using the username nad then using that to fetch the additional details.
+
+    # name ="John"
+    # query = "SELECT id FROM user_info WHERE name LIKE '"+name+"'"
+
+    # res = sql_dir(query)
+    # res = [i for j in res for i in j]
+
+    # query = "SELECT * FROM user_addi WHERE uuid = "+str(res[0])
+    # res = sql_dir(query)
+    # res = [i for j in res for i in j]
+
+
+    # return render_template('profile.html',logo_path = "..\\"+full_filename,username = name,res1 = res_titles ,res2=res_content,res3=res_authors,res4 = res_bid)
+
+    pass
 
 @app.route('/')
 def home_page():

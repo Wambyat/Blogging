@@ -1,11 +1,16 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
 	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
 	<title>Feed</title>
 	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
+
 </head>
+
 <body>
+
 	<div class = "navbar"> 
 
 		<a href={{url_for('logout')}}>Logout</a>
@@ -15,12 +20,14 @@
 		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 		</div>
 	</div>
+
 	<div class = "megabooga">
+
 		<div class = "blog">
 			<div class = "blog-content">
 				<div style = "padding-top: 18px;">
 				<h1 class="button_login" style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0; font-size: 48px;">
-					Blog title
+					{{username}}
 				</h1>
 				<a style="display: inline; margin: 0; font-size: 20px;"> author </a>
 				</div>
@@ -30,6 +37,37 @@
 				</p>
 			</div>
 		</div>
+
 	</div>
+	
+	<div class = "megabooga">
+
+		{% for row in res1  %}
+		{% set titl = res1[loop.index-1] %}
+		{% set id = res4[loop.index-1] %}
+
+		<div class = "blog">
+
+			<div class = "blog-content">
+				<div style = "padding-top: 18px;">
+				<a class="button_login" href={{ url_for('blog' , blogID = id) }} style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0;">
+					{{titl}}
+				</a>
+				{% set author = res3[loop.index-1] %}
+				<a href={{ url_for('profile' , name = author) }} style="display: inline; margin: 0;"> {{author}} </a>
+				</div>
+				<hr size="2" width = "98%" color = "black" >
+				{% set dets = res2[loop.index-1] %}
+				<p>
+					{{dets}}
+				</p>
+			</div>
+		</div>
+
+		{% endfor %}
+
+	</div>
+
 </body>
+
 </html>

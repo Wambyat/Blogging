@@ -1,10 +1,13 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
 	<title>Sign Up</title>
 </head>
+
 <body>
+
 	<div class = "navbar"> 
 
 		<a href={{url_for('logout')}}>Logout</a>
@@ -17,6 +20,7 @@
 
 	</div>
 	<div class="container" id="container">
+
 		<div class="form-container">
 			<form action="" method = "post">
 
@@ -24,6 +28,9 @@
 
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+
+				<input type = "text" placeholder = "Age" name = "age" value = "{{ request.form.age }}" style="display: inline;">
+				<input type = "text" placeholder = "About you :)" name = "about" value = "{{ request.form.about }}">
 
 				<a href={{url_for('login')}}>Login Instead?</a>
 				
@@ -34,10 +41,10 @@
 				<a style="font-size: 20px; padding-top: 3px;">{{error}}</a>
 
 				{% endif %}
+				
 				<input class = "button_login" type="submit" value="Login">
 
 			</form>
-
 		</div>
 
 		<div class="overlay-container">
@@ -50,6 +57,9 @@
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 </body>
+
 </html>
