@@ -15,6 +15,7 @@
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href="{{url_for('profile', name = currname)}}">Your Profile</a>
 		{% endif %}
+
 		<a href={{url_for('home')}}>Home</a>
 
 		<div class = "logo-div">
@@ -22,6 +23,7 @@
 			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 			</a>
 		</div>
+
 		<form style= "background-color: #c7c0ee;" action = "" method="post">
 			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
 		</form>
@@ -34,34 +36,68 @@
 				{% if "a" in edi %}
 				<form action="" method = "post">
 				<div style = "padding-top: 18px;">
-				
-				<input name = "title" class="button_login" Value = "{{titl}}" style="padding: 15px 15px; font-size: 60px; width: fit-content; display: inline-block; margin-bottom: 10px;"/>
-				<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} </a>
+
+					<input name = "title" class="button_login" Value = "{{titl}}" style="padding: 15px 15px; font-size: 60px; width: fit-content; display: inline-block; margin-bottom: 10px;"/>
+
+					<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} 
+					</a>
+
 				</div>
-				<hr size="2" width = "98%" color = "black" >
-				<img src = "{{img_path}}" alt = "broken:(" class="blog-image">
-				<input name = "conte"  Value = "{{conte}}"  style="font-size: 35px; line-height: 40px;"/>
-				<input class = "button_login" type="submit" value="Save"/>
+
+					<hr size="2" width = "98%" color = "black" >
+
+					<img src = "{{img_path}}" alt = "broken:(" class="blog-image">
+
+					<input name = "conte"  Value = "{{conte}}"  style="font-size: 35px; line-height: 40px;"/>
+
+					<input class = "button_login" type="submit" value="Save"/>
+
 				</form>
 
 				<form method="post" onsubmit = "return confirm('Are you sure you wish to delete?');">
-				<input class = "button_login" type="submit" name = "delete" value="Delete"/>
+
+					<input class = "button_login" type="submit" name = "delete" value="Delete"/>
+
 				</form>
 
 				{% else %}
+
 				<div style = "padding-top: 18px;">
+
 				<a class="button_login" href={{ url_for('blog' , blogID = id) }} style="padding: 15px 15px; font-size: 60px; width: fit-content; display: inline-block; margin-bottom: 10px;">
 					{{titl}}
 				</a>
-				<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} </a>
+
+				<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} 
+				</a>
+
 				</div>
+
 				<hr size="2" width = "98%" color = "black" >
+
 				<img src = "{{img_path}}" alt = "broken:(" class="blog-image">
+
 				<p style="font-size: 35px; line-height: 40px;">
 					{{conte}}
 				</p>
 
+				{% if "l" in edi%}
+
+				<form method = "post">
+
+				<input style = "color: chartreuse;"  class="button_login" type = "submit" name = "unlike" value = "{{no_of_likes}} Likes"/>
+
+				{% else %}
+
+				<form method = "post">
+
+				<input class="button_login" type = "submit" name = "like" value = "{{no_of_likes}} Likes"/>
+
+				</form>
 				{% endif %}
+
+				{% endif %}
+				
 			</div>
 		</div>
 	</div>

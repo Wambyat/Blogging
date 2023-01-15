@@ -103,9 +103,23 @@ def same_user(blogID, cid):
     if int(uid) == int(cid):
         print("here")
         return "a"
+
     else:
 
-        print("HOW THE FUCK")
+        #checks if user has liked the blog
+        query = "SELECT user_id FROM blog_like WHERE user_id = "+str(cid)+" AND blog_id = "+str(blogID)
+        res = sql_dir(query)
+        res = [j for i in res for j in i]
+        print(res)
+
+        if res == []:
+
+            return "b"
+
+        else:
+
+            return "l"
+
         return "b"
 
 def update_blog(blogID, title, content):
@@ -125,3 +139,30 @@ def delete_blog(blogID):
     cursor.execute(query)
     conn.commit()
     conn.close()
+
+def like_blog(blogID, cid):
+
+    query = "SELECT * FROM blog_like WHERE user_id = "+str(cid)+" AND blog_id = "+str(blogID)
+    res = sql_dir(query)
+    if res == []:
+        query = "INSERT INTO blog_like VALUES ("+str(blogID)+","+str(cid)+")"
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+    else:
+        query = "DELETE FROM blog_like WHERE user_id = "+str(cid)+" AND blog_id = "+str(blogID)
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+
+def get_likes(blogID):
+
+    query = "SELECT user_id  FROM blog_like WHERE blog_id = "+str(blogID)
+    res = sql_dir(query)
+    res = [j for i in res for j in i]
+
+    return len(res)

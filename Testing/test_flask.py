@@ -490,6 +490,16 @@ def blog(blogID):
             term = request.form['search']
             return redirect(url_for('search',term = term))
 
+        if "like" in request.form:
+            
+            like_blog(blogID,curr_user_id)
+            return redirect(url_for('blog',blogID = blogID))
+
+        if "unlike" in request.form:
+            
+            like_blog(blogID,curr_user_id)
+            return redirect(url_for('blog',blogID = blogID))
+
         if "delete" in request.form:
             
             print("This works?????????????????????")
@@ -530,9 +540,9 @@ def blog(blogID):
 
     path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
 
+    no_of_likes = get_likes(blogID)
 
-
-    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2],edi = edi,currname = curr_user) 
+    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2],edi = edi,currname = curr_user,no_of_likes = no_of_likes) 
 
 
 
