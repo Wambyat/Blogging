@@ -603,6 +603,18 @@ def profile(name):
             
             login_check = 0
             return redirect(url_for('login'))
+        
+        if "follow" in request.form:
+
+            uid = get_user_id(name)        
+            follow_user(uid,curr_user_id)
+            return redirect(url_for('profile',name = name))
+        
+        if "unfollow" in request.form:
+
+            uid = get_user_id(name)        
+            follow_user(uid,curr_user_id)
+            return redirect(url_for('profile',name = name))
 
     logi = "a" if login_check == 0 else "b"
 
@@ -646,14 +658,16 @@ def profile(name):
 
     edi = "a" if name == curr_user else "b"
 
-    fol = get_following(curr_user_id)
+    fol = get_following(get_user_id(name))
+    print(fol)
 
     if curr_user_id in fol:
-        edi = edi + "f"
-    else :
-        edi = edi + "n"
 
-    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi)
+        fol ="f"
+    else :
+        fol = "n"
+
+    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi,fol =fol)
 
 
 #!FINISHED

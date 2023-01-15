@@ -77,7 +77,7 @@
 		{% else %}
 
 		<div class="form-container">
-			<form action="" method = "post" style="width: fit-content;">
+			<form action="" method = "post" style="width: fit-content; max-width: 100%;">
 
 				<h1 style="font-size: 100px;">{{username}}</h1>
 
@@ -92,26 +92,24 @@
 
 					<h1 style="width: inherit;">{{about}}</h1>
 					<p>I am {{age}} years old</p>
+					{% if "n" in fol %}
+
+					<form action="" method = "post" style="width: fit-content;">
+
+						<input class="button_login" type="submit" name="follow" value="Follow me! :)"/>
+					</form>
+
+					{% else %}
+
+					<form action="" method = "post" style="width: fit-content;">
+
+						<input class="button_login" type="submit" name="unfollow" value="Unfollow me! :("/>
+					</form>
 					
+					{% endif %}
+
 				</div>
 			</div>
-
-			{% if "n" in edi %}
-
-			<form action="" method = "post" style="width: fit-content;">
-
-				<input class="button_login" type="submit" name="follow" value="Follow me! :)"/>
-			</form>
-
-			{% else %}
-
-			<form action="" method = "post" style="width: fit-content;">
-
-				<input class="button_login" type="submit" name="unfollow" value="Unfollow me! :("/>
-			</form>
-			
-			{% endif %}
-
 		</div>
 
 		{% endif %}

@@ -34,3 +34,5 @@ INSERT INTO blog_info VALUES(0, 'This is a the deafult blog',2,'This is content'
 
 INSERT INTO user_addi VALUES(2, 30, 'This is a description for the admin');
 INSERT INTO user_addi VALUES(4, 3, 'im a baby');
+
+SELECT follower_id FROM user_follow WHERE user_id = 1;

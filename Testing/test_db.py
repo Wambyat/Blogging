@@ -195,7 +195,7 @@ def get_followers(uid):
 #This returns followings for a user
 def get_following(uid):
     
-    query = "SELECT user_id FROM user_follow WHERE follower_id = "+str(uid)
+    query = "SELECT follower_id FROM user_follow WHERE user_id = "+str(uid)
     res = sql_dir(query)
     res = [j for i in res for j in i]
 
@@ -237,3 +237,29 @@ def delete_user(uid):
     cursor.execute(query)
     conn.commit()
     conn.close()
+
+#This adds or removes a follower to a user
+def follow_user(uid, cid):
+    
+    query = "SELECT * FROM user_follow WHERE user_id = "+str(uid)+" AND follower_id = "+str(cid)
+    res = sql_dir(query)
+    if res == []:
+        query = "INSERT INTO user_follow VALUES ("+str(uid)+","+str(cid)+")"
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+    else:
+        query = "DELETE FROM user_follow WHERE user_id = "+str(uid)+" AND follower_id = "+str(cid)
+        conn = sqlite3.connect('test.db')
+        cursor = conn.cursor()
+        cursor.execute(query)
+        conn.commit()
+        conn.close()
+
+def get_user_id(username):
+    query = "SELECT id FROM user_info WHERE name = '"+username+"'"
+    res = sql_dir(query)
+    res = [j for i in res for j in i]
+    return res[0]
