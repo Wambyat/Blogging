@@ -21,8 +21,6 @@ curr_user_id = 0
 
 #sql functions are imported from test.db
 
-#TODO MAKE A SPECIAL BLOG 0 FOR NO BLOG
-
 #*################################################
 #*           Login related functions             #
 #*################################################
@@ -419,7 +417,6 @@ def newblog():
 
     return render_template('newblog.html',logo_path = "..\\"+full_filename,currname = curr_user)
 
-#TODO Add follow unfollow and like dislike
 #!FINISHED
 #################################################
 #*                 Main feed                    #
