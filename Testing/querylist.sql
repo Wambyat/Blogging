@@ -31,3 +31,6 @@ SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHE
 SELECT name,description FROM user_info JOIN user_addi on id = uuid;
 
 INSERT INTO blog_info VALUES(0, 'This is a the deafult blog',2,'This is content')
+
+INSERT INTO user_addi VALUES(2, 30, 'This is a description for the admin');
+INSERT INTO user_addi VALUES(4, 3, 'im a baby');
