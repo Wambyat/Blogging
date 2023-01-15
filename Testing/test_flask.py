@@ -151,7 +151,7 @@ def logout():
 
             return redirect(url_for('login'))
 
-    return render_template('logout.html', username = curr_user,logo_path = "..\\"+full_filename)
+    return render_template('logout.html', username = curr_user,logo_path = "..\\"+full_filename,currname = curr_user)
 
 
 
@@ -417,7 +417,7 @@ def newblog():
 
 
 
-    return render_template('newblog.html',logo_path = "..\\"+full_filename)
+    return render_template('newblog.html',logo_path = "..\\"+full_filename,currname = curr_user)
 
 #TODO Add follow unfollow and like dislike
 #!FINISHED
@@ -533,7 +533,9 @@ def blog(blogID):
 
     path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
 
-    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2],edi = edi )
+
+
+    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2],edi = edi,currname = curr_user) 
 
 
 
@@ -558,6 +560,10 @@ def profile(name):
     #Getting the user id using the username nad then using that to fetch the additional details.
 
     global full_filename
+
+    if login_check == 0:
+            
+        return redirect(url_for('login'))
 
     if name == "default":
 
@@ -612,7 +618,7 @@ def profile(name):
     about = res[2]
     age = res[1]
 
-    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid)
+    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user)
 
 
 #!FINISHED
@@ -657,7 +663,7 @@ def search(term):
         res11 = [i[0] for i in res_u]
         res22 = [i[1] for i in res_u]
 
-    return render_template('search.html',res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,res11 = res11,res22 = res22)
+    return render_template('search.html',res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,res11 = res11,res22 = res22,currname = curr_user)
 
 
 

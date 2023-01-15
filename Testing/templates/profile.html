@@ -18,7 +18,7 @@
 
 		{% else%}
 		<a href={{url_for('logout')}}>Logout</a>
-
+		<a href="{{url_for('profile', name = currname)}}">Your Profile</a>
 		{% endif %}
 		<a href={{url_for('home')}}>Home</a>
 		

@@ -8,8 +8,13 @@
 <body>
 	<div class = "navbar"> 
 
-		<a href={{url_for('logout')}}>Logout</a>
+		{% if "a" in logi %}
 		<a href={{url_for('login')}}>Login/Sign Up</a>
+
+		{% else%}
+		<a href={{url_for('logout')}}>Logout</a>
+		<a href="{{url_for('profile', name = currname)}}">Your Profile</a>
+		{% endif %}
 		<a href={{url_for('home')}}>Home</a>
 
 		<div class = "logo-div">
