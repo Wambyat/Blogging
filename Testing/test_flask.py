@@ -644,7 +644,7 @@ def profile(name):
     about = res[2]
     age = res[1]
 
-    edi = "a"
+    edi = "a" if name == curr_user else "b"
 
     return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi)
 
