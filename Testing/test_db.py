@@ -186,7 +186,7 @@ def get_blogs(uid):
 #This returns the followers for a user
 def get_followers(uid):
     
-    query = "SELECT user_id FROM user_follow WHERE user_id = "+str(uid)
+    query = "SELECT follower_id  FROM user_follow WHERE user_id = "+str(uid)
     res = sql_dir(query)
     res = [j for i in res for j in i]
 
@@ -195,7 +195,7 @@ def get_followers(uid):
 #This returns followings for a user
 def get_following(uid):
     
-    query = "SELECT follower_id FROM user_follow WHERE user_id = "+str(uid)
+    query = "SELECT user_id FROM user_follow WHERE follower_id = "+str(uid)
     res = sql_dir(query)
     res = [j for i in res for j in i]
 

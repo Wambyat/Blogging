@@ -554,14 +554,40 @@ def home():
 
 
 
-@app.route("/fol/<name>/")
-def fol(name):
+@app.route("/fols/<name>/")
+def fols(name):
 
     #need to give logi,currname,fol,fing
     logi = "a" if login_check == 0 else "b"
     currname = curr_user
 
+    uid = get_user_id(name)
+
+    fol =get_following(uid)
+    fing = get_followers(uid)
+
+    if len(fol) == 1:
+
+        query = "SELECT name FROM user_info WHERE id = "+str(fol[0])
+
+    else:
+
+        query = "SELECT name FROM user_info WHERE id in "+str(tuple(fol))
+
+    fol = sql_dir(query)
+    fol = [i[0] for i in fol]
+
+    if len(fing) == 1:
+
+        query = "SELECT name FROM user_info WHERE id = "+str(fing[0])
     
+    else:
+        query = "SELECT name FROM user_info WHERE id in "+str(tuple(fing))
+
+    fing = sql_dir(query)
+    fing = [i[0] for i in fing]
+
+    return render_template('fol.html',logi = logi,currname = currname,fol = fol,fing = fing)    
 
 
 
@@ -670,7 +696,7 @@ def profile(name):
 
     uid = get_user_id(name)
 
-    fol = get_following(uid)
+    fol = get_followers(uid)
     print(fol)
 
     if curr_user_id in fol:
