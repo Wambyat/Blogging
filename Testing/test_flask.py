@@ -554,6 +554,18 @@ def home():
 
 
 
+@app.route("/fol/<name>/")
+def fol(name):
+
+    #need to give logi,currname,fol,fing
+    logi = "a" if login_check == 0 else "b"
+    currname = curr_user
+
+    
+
+
+
+
 #TODO Add follower and following and edit
 #!FINISHED
 #####################################

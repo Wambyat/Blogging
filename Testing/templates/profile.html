@@ -64,6 +64,7 @@
 						<input name = "age" Value = "{{age}}"  style="font-size: 25px;"/>
 						
 						<p>You have {{no_of_blogs}} blogs </p>
+						<a href="{{url_for('fols',name = username)}}">My following and followers!</a>
 
 						<input style="border-color: #c7c0ee; border: solid;"  class="button_login" type="submit" name="about_up" value="Save about change"/>
 					</form>
@@ -96,6 +97,8 @@
 					<h1 style="width: inherit;">{{about}}</h1>
 					<p>I am {{age}} years old</p>
 					<p>I have {{no_of_blogs}} blogs </p>
+					<a href="{{url_for('fols',name = username)}}">My following and followers!</a>
+					
 					{% if "n" in fol %}
 
 					<form action="" method = "post" style="width: fit-content;">
