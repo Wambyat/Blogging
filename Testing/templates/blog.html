@@ -17,11 +17,33 @@
 			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 			</a>
 		</div>
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
 		
 	</div>
 	<div class = "megabooga">
 		<div class = "blog">
 			<div class = "blog-content">
+
+				{% if "a" in edi %}
+				<form action="" method = "post">
+				<div style = "padding-top: 18px;">
+				
+				<input name = "title" class="button_login" Value = "{{titl}}" style="padding: 15px 15px; font-size: 60px; width: fit-content; display: inline-block; margin-bottom: 10px;"/>
+				<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} </a>
+				</div>
+				<hr size="2" width = "98%" color = "black" >
+				<img src = "{{img_path}}" alt = "broken:(" class="blog-image">
+				<input name = "conte"  Value = "{{conte}}"  style="font-size: 35px; line-height: 40px;"/>
+				<input class = "button_login" type="submit" value="Save"/>
+				</form>
+
+				<form method="post" onsubmit = "return confirm('Are you sure you wish to delete?');">
+				<input class = "button_login" type="submit" name = "delete" value="Delete"/>
+				</form>
+
+				{% else %}
 				<div style = "padding-top: 18px;">
 				<a class="button_login" href={{ url_for('blog' , blogID = id) }} style="padding: 15px 15px; font-size: 60px; width: fit-content; display: inline-block; margin-bottom: 10px;">
 					{{titl}}
@@ -33,6 +55,8 @@
 				<p style="font-size: 35px; line-height: 40px;">
 					{{conte}}
 				</p>
+
+				{% endif %}
 			</div>
 		</div>
 	</div>

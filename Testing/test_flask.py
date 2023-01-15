@@ -482,7 +482,7 @@ def feed():
 ####################################
 #*          SINGLE BLOG            #
 
-@app.route('/blog/<int:blogID>/')
+@app.route('/blog/<int:blogID>/',methods = ['POST','GET'])
 def blog(blogID):
     
     global full_filename
@@ -493,6 +493,39 @@ def blog(blogID):
             term = request.form['search']
             return redirect(url_for('search',term = term))
 
+        if "delete" in request.form:
+            
+            print("This works?????????????????????")
+            delete_blog(blogID)
+            ur = "http://127.0.0.1:5000/profile/"+str(curr_user)
+            return redirect(ur)
+
+
+        if "title" in request.form:
+            
+            title = request.form['title']
+            content = request.form['conte']
+
+            if "'" in title:
+                    
+                title = title.replace("'","''")
+            if "'" in content:
+                    
+                content = content.replace("'","''")
+
+            update_blog(blogID,title,content)
+            return redirect(url_for('blog',blogID = blogID))
+
+    blog_list = sql_query("blog_info","bid")
+    blog_list = [i for j in blog_list for i in j]
+
+    if blogID not in blog_list:
+        blogID = 0
+
+    edi = same_user(blogID,curr_user_id)
+
+    print(edi)
+
     query = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE bid ="+str(blogID)
     res=sql_dir(query)
     res = [j for i in res for j in i]
@@ -500,7 +533,7 @@ def blog(blogID):
 
     path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
 
-    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2]  )
+    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2],edi = edi )
 
 
 
@@ -526,6 +559,10 @@ def profile(name):
 
     global full_filename
 
+    if name == "default":
+
+        name = "John"
+
     if request.method == 'POST':
 
         if "search" in request.form:
@@ -539,6 +576,7 @@ def profile(name):
 
     res = sql_dir(query)
     res = [i for j in res for i in j]
+    print(res)
     profile_user = res[0]
     print("User id")
     print(profile_user)

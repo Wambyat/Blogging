@@ -29,3 +29,5 @@ SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHE
 SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE btitle LIKE '%website%';
 
 SELECT name,description FROM user_info JOIN user_addi on id = uuid;
+
+INSERT INTO blog_info VALUES(0, 'This is a the deafult blog',2,'This is content')

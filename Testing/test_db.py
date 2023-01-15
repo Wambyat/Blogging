@@ -88,3 +88,40 @@ def new_blog(title,content,uid):
     conn.commit()
     conn.close()
     return blog_id
+
+def same_user(blogID, cid):
+
+    query = "SELECT uid FROM blog_info WHERE bid ="+str(blogID)
+    res = sql_dir(query)
+    res = [j for i in res for j in i]
+    print(res)
+
+    if res == []:
+        return "b"
+
+    uid = res[0]
+    if int(uid) == int(cid):
+        print("here")
+        return "a"
+    else:
+
+        print("HOW THE FUCK")
+        return "b"
+
+def update_blog(blogID, title, content):
+
+    query = "UPDATE blog_info SET btitle = '"+title+"', bcontent = '"+content+"' WHERE bid = "+str(blogID)
+    conn = sqlite3.connect('test.db')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
+
+def delete_blog(blogID):
+    
+    query = "DELETE FROM blog_info WHERE bid = "+str(blogID)
+    conn = sqlite3.connect('test.db')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
