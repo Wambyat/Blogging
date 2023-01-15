@@ -413,8 +413,6 @@ def newblog():
             print("Image saved")
             return redirect(ur)
 
-
-
     return render_template('newblog.html',logo_path = "..\\"+full_filename,currname = curr_user)
 
 #!FINISHED
