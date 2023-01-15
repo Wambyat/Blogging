@@ -61,6 +61,8 @@
 						<label for="age" style="color: rgb(255, 255, 255);font-size: 20px;font-weight: bold;">Age:</label>
 
 						<input name = "age" Value = "{{age}}"  style="font-size: 25px;"/>
+						
+						<p>You have {{no_of_blogs}} blogs </p>
 
 						<input style="border-color: #c7c0ee; border: solid;"  class="button_login" type="submit" name="about_up" value="Save about change"/>
 					</form>
@@ -92,6 +94,7 @@
 
 					<h1 style="width: inherit;">{{about}}</h1>
 					<p>I am {{age}} years old</p>
+					<p>I have {{no_of_blogs}} blogs </p>
 					{% if "n" in fol %}
 
 					<form action="" method = "post" style="width: fit-content;">

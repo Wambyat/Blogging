@@ -658,7 +658,9 @@ def profile(name):
 
     edi = "a" if name == curr_user else "b"
 
-    fol = get_following(get_user_id(name))
+    uid = get_user_id(name)
+
+    fol = get_following(uid)
     print(fol)
 
     if curr_user_id in fol:
@@ -667,7 +669,9 @@ def profile(name):
     else :
         fol = "n"
 
-    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi,fol =fol)
+    no_of_blogs = get_blogs(uid)
+
+    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi,fol =fol,no_of_blogs = no_of_blogs)
 
 
 #!FINISHED
