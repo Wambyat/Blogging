@@ -1,5 +1,5 @@
-Make sure flask is installed as well as sqlite3. Make sure module os is enabled/ allowed as it is used to safly store images.
-Preferable run this on a windows machiene.
+Make sure flask is installed as well as sqlite3. Make sure module os is enabled/ allowed as it is used to safely store images.
+Preferable run this on a windows machiene it has not been tested on any linux machine.
 
 Do not change or move any files they are in the required directories.
 
