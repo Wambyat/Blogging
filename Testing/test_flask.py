@@ -35,8 +35,6 @@ def login():
 
     global full_filename
     global path
-    print(full_filename)
-    print(path)
     
     error = "We have Over 10 Users!"
     print("Login here")
@@ -407,10 +405,7 @@ def newblog():
         else:
 
             file = request.files['image']
-            a = "\\bb"+str(blog_id)+".png"
-            path = "C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads"+a
-            file.save(path)
-            print("Image saved")
+            print("image received")
             return redirect(ur)
 
     return render_template('newblog.html',logo_path = "..\\"+full_filename,currname = curr_user)
@@ -466,9 +461,9 @@ def feed():
         res_content = [i[2] for i in res]
         res_author = [i[3] for i in res]
 
-    path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
+    path ="..\static\\uploads\icon.jpg"
 
-    return render_template('feed.html', logo_path = path,logi = logi, res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid,currname = curr_user)
+    return render_template('feed.html', logo_path = full_filename,logi = logi, res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid,currname = curr_user)
 
 
 
@@ -536,7 +531,7 @@ def blog(blogID):
     res = [j for i in res for j in i]
     res1 = "admin"
 
-    path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
+    path ="..\static\\uploads\icon.jpg"
 
     no_of_likes = get_likes(blogID)
 
@@ -556,6 +551,11 @@ def home():
 
 @app.route("/fols/<name>/")
 def fols(name):
+
+    if login_check == 0:
+
+        print("ogga")
+        return redir_to_login()
 
     #need to give logi,currname,fol,fing
     logi = "a" if login_check == 0 else "b"
