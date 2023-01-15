@@ -561,12 +561,13 @@ def home():
 #####################################
 #*             profile page         #
 
-@app.route('/profile/<name>/')
+@app.route('/profile/<name>/',methods = ['POST','GET'])
 def profile(name):
 
     #Getting the user id using the username nad then using that to fetch the additional details.
 
     global full_filename
+    global login_check
 
     if login_check == 0:
             
@@ -583,16 +584,35 @@ def profile(name):
             term = request.form['search']
             return redirect(url_for('search',term = term))
 
+        if "uname_up" in request.form:
+                
+            uname = request.form['uname']
+            update_user_info(curr_user_id,uname)
+            return redirect(url_for('profile',name = uname))
+        
+        if "about_up" in request.form:
+                
+            about = request.form['about']
+            age = request.form['age']
+            update_user_addi(curr_user_id,age,about)
+            return redirect(url_for('profile',name = name))
+        
+        if "delete" in request.form:
+                
+            delete_user(curr_user_id)
+            
+            login_check = 0
+            return redirect(url_for('login'))
+
     logi = "a" if login_check == 0 else "b"
 
     query = "SELECT id FROM user_info WHERE name = '"+name+"'"
 
     res = sql_dir(query)
     res = [i for j in res for i in j]
-    print(res)
+
     profile_user = res[0]
-    print("User id")
-    print(profile_user)
+
 
     query1 = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE uid ="+str(profile_user)
 
@@ -602,13 +622,12 @@ def profile(name):
     for i in temp:
         res.append([j for j in i])
 
-    print(res)
 
     if res == []:
 
         res_content = ["You don't have any posts."]
         res_titles = ["Make a blog :)"]
-        res_authors = ["- The team"]
+        res_author = ["- The team"]
         res_bid = [0]
 
     else:
@@ -625,7 +644,9 @@ def profile(name):
     about = res[2]
     age = res[1]
 
-    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user)
+    edi = "a"
+
+    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,currname = curr_user,edi = edi)
 
 
 #!FINISHED

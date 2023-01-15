@@ -35,6 +35,47 @@
 
 	<div class="container" id="container" style="width: 50%;">
 
+		{% if "a" in edi %}
+
+		<div class="form-container">
+			<form action="" method = "post" style="width: fit-content;">
+
+				<input name = "uname" Value = "{{username}}"  style="font-size: 100px;"/>
+
+				<input class="button_login" type="submit" name="uname_up" value="Save name change"/>
+
+
+			</form>
+        	
+		</div>
+
+		<div class="overlay-container">
+			<div class="overlay" >
+				<div class="overlay-panel" style="width: 60%;">
+
+					<form action="" style="background-color: #6b2bff; position: relative; left: 40px;"  method = "post">
+
+						<label for="about" style="color: rgb(255, 255, 255);font-size: 20px;font-weight: bold;">About you:</label>
+						<input name = "about" Value = "{{about}}"  style="font-size: 20px;"/>
+
+						<label for="age" style="color: rgb(255, 255, 255);font-size: 20px;font-weight: bold;">Age:</label>
+
+						<input name = "age" Value = "{{age}}"  style="font-size: 25px;"/>
+
+						<input style="border-color: #c7c0ee; border: solid;"  class="button_login" type="submit" name="about_up" value="Save about change"/>
+					</form>
+					<form style="height: fit-content; background-color: #6b2bff; position: relative; bottom: 20px; left: 20px;"   method="post" onsubmit = "return confirm('Are you sure you wish to delete?');">
+
+						<input style="border-color: #c7c0ee; border: solid;" class = "button_login" type="submit" name = "delete" value="Delete"/>
+		
+					</form>
+				</div>
+			</div>
+
+		</div>
+		
+		{% else %}
+
 		<div class="form-container">
 			<form action="" method = "post" style="width: fit-content;">
 
@@ -56,6 +97,9 @@
 			</div>
 
 		</div>
+
+		{% endif %}
+
 	</div>
 
 	
