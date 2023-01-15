@@ -53,3 +53,38 @@ def sql_dir(query1):
         print("\nConnection closed\n")
 
         return result
+
+#######################################
+#*           SEARCH FUNCTION         #
+#* returns a dictionary with 2 lists {user:[],blog:[]}
+
+def search_func(term):
+    query_blog = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE btitle LIKE '%"+term+"%';"
+
+    query_user = "SELECT name,description FROM user_info JOIN user_addi on id = uuid WHERE name LIKE '%"+term+"%';"
+
+    user_res = sql_dir(query_user)
+    blog_res = sql_dir(query_blog)
+
+    user_res = [list(i) for i in user_res]
+    blog_res = [list(i) for i in blog_res]
+
+    return {"user":user_res,"blog":blog_res}
+
+
+#######################################
+#*          New Blog Function        #
+
+def new_blog(title,content,uid):
+
+
+    temp = sql_query("blog_info","bid")
+    temp = [int(i) for j in temp for i in j]
+    blog_id = max(temp)+1
+    query = "INSERT INTO blog_info VALUES ("+str(blog_id)+",'"+title+"',"+str(uid)+",'"+content+"')"
+    conn = sqlite3.connect('test.db')
+    cursor = conn.cursor()
+    cursor.execute(query)
+    conn.commit()
+    conn.close()
+    return blog_id

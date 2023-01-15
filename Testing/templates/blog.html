@@ -2,7 +2,7 @@
 <html>
 <head>
 	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
-	<title>Feed</title>
+	<title>{{titl}}</title>
 	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
 </head>
 <body>
@@ -13,7 +13,9 @@
 		<a href={{url_for('home')}}>Home</a>
 
 		<div class = "logo-div">
-		<img src = "{{logo_path}}" alt = "broken:(" class="logo"/>
+			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+			</a>
 		</div>
 		
 	</div>
@@ -27,8 +29,9 @@
 				<a href={{ url_for('profile' , name = author) }} style="display: inline; font-size: 30px;"> {{author}} </a>
 				</div>
 				<hr size="2" width = "98%" color = "black" >
-				<p style="font-size: 35px;">
-					{{dets}}
+				<img src = "{{img_path}}" alt = "broken:(" class="blog-image">
+				<p style="font-size: 35px; line-height: 40px;">
+					{{conte}}
 				</p>
 			</div>
 		</div>

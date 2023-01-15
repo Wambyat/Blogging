@@ -22,3 +22,10 @@ SELECT sql FROM sqlite_master WHERE type='table';
 
 INSERT INTO blog_info VALUES (4, 'Wow im helping test the website !! )w)', 1, 'This a super long long mainly made to test. how this websote renders it. Hmmm im not really sure wat to put here. I wonder how many people weill ever see this? Wow that makes me kinda ssad. So many things are lost to the eternity. No way of ever knowing if legacy will ever live. Even a vile man like Hitker will be forgotten one day. In that case the sooner the better. Then again im not sure if that is a good idea.');
 
+SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id;
+
+SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE uid = 3;
+
+SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE btitle LIKE '%website%';
+
+SELECT name,description FROM user_info JOIN user_addi on id = uuid;

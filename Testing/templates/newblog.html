@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
+	<title>New Blog</title>
+	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
+</head>
+<body>
+	<div class = "navbar"> 
+
+		<a href={{url_for('logout')}}>Logout</a>
+		<a href={{url_for('home')}}>Home</a>
+
+		<div class = "logo-div">
+			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+			</a>
+		</div>
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
+		
+	</div>
+
+	<div class="container" style="height: auto">
+		<div class = ".form-container" style = "justify-content: center;">
+			<form action ="" method = "POST" enctype="multipart/form-data">
+				<h1>New Blog</h1>
+				<input type = "text" name = "title" placeholder = "Title" required>
+				<input type = "text" name = "content" placeholder = "Content" required>
+				<input type = "file" name = "image" placeholder = "Image" required>
+				<input class = "button_login" type="submit" name = "blog" value="Make a new blog!">
+			</form>
+		</div>
+	</div>
+</body>
+</html>

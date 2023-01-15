@@ -8,10 +8,20 @@
 <body>
 	<div class = "navbar"> 
 
-		<a href={{url_for('logout')}}>Logout</a>
+		{% if "a" in logi %}
 		<a href={{url_for('login')}}>Login/Sign Up</a>
+
+		{% else%}
+		<a href={{url_for('logout')}}>Logout</a>
+
+		{% endif %}
+		
 		<a href={{url_for('home')}}>Home</a>
-		<img  src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		<div class = "logo-div">
+			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+			<img  src = "{{logo_path}}" alt = "icon be gone" class="logo"/>
+			</a>
+		</div>
 		
 		<form style= "width: fit-content; height: 10px; display: inline-block; background-color: #c7c0ee; padding: 10px;" action = "" method="post">
 			<input style = "height: 60%; margin-top:  0;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >

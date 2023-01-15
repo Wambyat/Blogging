@@ -1,19 +1,14 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
 	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
-	<title>{{username}}'s profile</title>
+	<title>Search results</title>
 	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
-
 </head>
-
 <body>
-
 	<div class = "navbar"> 
-		
-		{% if "a" in logi %}
+
+        {% if "a" in logi %}
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 
 		{% else%}
@@ -21,49 +16,59 @@
 
 		{% endif %}
 		<a href={{url_for('home')}}>Home</a>
-		
 		<div class = "logo-div">
 			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
 			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
 			</a>
 		</div>
-
-	</div>
-
-	<div class="container" id="container" style="width: 50%;">
-
-		<div class="form-container">
-			<form action="" method = "post" style="width: fit-content;">
-
-				<h1 style="font-size: 100px;">{{username}}</h1>
-
-
-			</form>
-        	
-		</div>
-
-		<div class="overlay-container">
-			<div class="overlay" >
-				<div class="overlay-panel" style="width: 60%;">
-
-					<h1>{{about}}</h1>
-					<p>I am {{age}} years old</p>
-					
-				</div>
+		
+		<form style= "width: fit-content; height: 10px; display: inline-block; background-color: #c7c0ee; padding: 10px;" action = "" method="post">
+			<input style = "height: 60%; margin-top:  0;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+			<div class = "logo-div">
 			</div>
+		</form>
 
+	</div>
+    
+	<div class = "megabooga">
+
+		<div style="bottom: 10px; position: relative;" class = "blog" >
+		<h1 style="margin: 7px;">
+			Users:
+		</h1>
 		</div>
+		
+		{% for row in res11  %}
+		{% set uname = res11[loop.index-1] %}
+		{% set udesc = res22[loop.index-1] %}
+		<div class = "blog">
+			<div class = "blog-content">
+				<div style = "padding-top: 18px;">
+				<a class="button_login" href={{ url_for('profile' , name = uname) }} style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0;">
+					{{uname}}
+				</a>
+				</div>
+				<hr size="2" width = "98%" color = "black" >
+				<p>
+					{{udesc}}
+				</p>
+			</div>
+		</div>
+		{% endfor %}
 	</div>
 
-	
-	<div class = "megabooga" style="max-width: 45%;">
+	<div class = "megabooga">
 
+		<div style="bottom: 10px; position: relative;" class = "blog" >
+		<h1 style="margin: 7px;">
+			Blogs:
+		</h1>
+		</div>
+		
 		{% for row in res1  %}
 		{% set titl = res1[loop.index-1] %}
 		{% set id = res4[loop.index-1] %}
-
 		<div class = "blog">
-
 			<div class = "blog-content">
 				<div style = "padding-top: 18px;">
 				<a class="button_login" href={{ url_for('blog' , blogID = id) }} style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0;">
@@ -79,11 +84,7 @@
 				</p>
 			</div>
 		</div>
-
 		{% endfor %}
-
 	</div>
-
 </body>
-
 </html>

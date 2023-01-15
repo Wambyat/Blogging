@@ -191,14 +191,30 @@ input {
 	padding-left: 15px;
 	padding-bottom: 30px;
 }
+
 .blog-content a {
 	font-size: 20px;
 	padding-left: 15px;
 	padding-bottom: 30px;
 }
 
+.blog-image{
+	max-height: 100px;
+	width: auto;
+}
+
 .logo{
 	padding-top: 10px;
 	padding-left: 10px;
 	max-height: 60px;
+}
+
+.logo-div{
+	width: fit-content;
+	position: absolute;
+}
+
+.ig{
+	position: absolute;
+	background-color: rgba(194, 34, 34, 0.5);
 }

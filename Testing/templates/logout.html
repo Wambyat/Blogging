@@ -13,11 +13,12 @@
 	<div class = "navbar"> 
 
 		<a href={{url_for('logout')}}>Logout</a>
-		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
 		
 		<div class = "logo-div">
-		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+			</a>
 		</div>
 
 	</div>

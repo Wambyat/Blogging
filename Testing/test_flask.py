@@ -1,20 +1,27 @@
 from flask import Flask, redirect, url_for, request, render_template
+
 import sqlite3
 import os
 from test_db import *
 
 UP_FOLDER = os.path.join('static', 'uploads')
+ALLOWED_FILES = ('png', 'jpg', 'jpeg', 'gif')
 
 app = Flask(__name__)
 app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
 
 app.config['UPLOAD_FOLDER'] = UP_FOLDER
 
+full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+path = os.path.join(app.config['UPLOAD_FOLDER'], 'p1.png')
+
 login_check = 0
 curr_user = "default"
 curr_user_id = 0
 
-#TODO make a profile page
+#sql functions are imported from test.db
+
+#TODO MAKE A SPECIAL BLOG 0 FOR NO BLOG
 
 #*################################################
 #*           Login related functions             #
@@ -28,8 +35,11 @@ curr_user_id = 0
 @app.route('/login/',methods = ['POST','GET'])
 def login():
 
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
-
+    global full_filename
+    global path
+    print(full_filename)
+    print(path)
+    
     error = "We have Over 10 Users!"
     print("Login here")
 
@@ -45,6 +55,11 @@ def login():
         return redir_to_logout()
 
     if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
 
         user_names = sql_query("user_info","name")
 
@@ -95,11 +110,11 @@ def login():
             else:
 
                 error = 'Invalid Credentials. Try again'
-                return render_template('login.html', error = error,logo_path = "..\\"+full_filename)
+                return render_template('login.html', error = error,logo_path = "..\\"+full_filename,img_path = path)
             
     else:
 
-        return render_template('login.html', error = error,logo_path = "..\\"+full_filename)
+        return render_template('login.html', error = error,logo_path = "..\\"+full_filename,img_path = path)
 
 
 
@@ -111,7 +126,7 @@ def login():
 @app.route('/logout/',methods = ['POST','GET'])
 def logout():
 
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+    global full_filename
 
     global login_check
     global curr_user
@@ -123,6 +138,11 @@ def logout():
         return redir_to_login()
 
     if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
 
         if "logout" in request.form:
                 
@@ -143,12 +163,22 @@ def logout():
 @app.route('/passreset/',methods = ['POST','GET'])
 def pass_reset():
 
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+    global full_filename
+
+    if login_check == 1:
+
+        print("ogga")
+        return redir_to_logout()
 
     error = "Please enter the new password"
     username = ""
 
     if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
 
         error = "Please enter the new password"
         username = ""
@@ -199,7 +229,7 @@ def pass_reset():
 @app.route('/signup/',methods = ['POST','GET'])
 def signup():
 
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+    global full_filename
 
     error = "Enter your desired username and password"
     print("Sign up here")
@@ -214,6 +244,11 @@ def signup():
         return redir_to_logout()
 
     if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
 
         user_names = sql_query("user_info","name")
 
@@ -296,7 +331,7 @@ def signup():
     return render_template('signup.html',error = error,logo_path = "..\\"+full_filename)
 
 
-
+#?These are kinda useless but they remain cuz i've run out of time
 
 #!FINISHED
 #*REDIRECTOR FUNCTION (for login)
@@ -306,33 +341,85 @@ def redir_to_login():
     return redirect(url_for('login'))
 
 
-
-
 #!FINISHED
 #*REDIRECTOR FUNCTION (for logout)
 
 def redir_to_logout():
     
-    return redirect(url_for('logout',username = curr_user))
+    return redirect(url_for('logout'))
+
+
 
 #################################################################################################
-
 #*################################################
 #*          Blog related functions               #
 #*################################################
 
 
-#################################################
-#*               (testing page)                 #
-
-@app.route('/test/',methods = ['POST','GET'])
-def test():
-
-    return render_template('profile.html')
 
 
+##################################################
+#*                   New Blog                    #
+@app.route('/newblog/',methods = ['POST','GET'])
+def newblog():
+
+    global full_filename
+    global login_check
+
+    blog_id = 0
+
+    if login_check == 0:
+
+        print("ogga")
+        return redir_to_login()
+
+    if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
+
+        
+        
+        try:
+            print("here?")
+            title = request.form['title']
+            content = request.form['content']
+
+            if "'" in title:
+                
+                title = title.replace("'","''")
+            if "'" in content:
+                
+                content = content.replace("'","''")
+            
+            blog_id = new_blog(title,content,curr_user_id)
+
+            ur = "http://127.0.0.1:5000/blog/"+str(blog_id)
+            
+        except Exception as e:
+            print(e)
+
+        if "image" not in request.files:
+
+            print("No image found")
+            
+        
+        else:
+
+            file = request.files['image']
+            a = "\\bb"+str(blog_id)+".png"
+            path = "C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads"+a
+            file.save(path)
+            print("Image saved")
+            return redirect(ur)
 
 
+
+    return render_template('newblog.html',logo_path = "..\\"+full_filename)
+
+#TODO Add follow unfollow and like dislike
 #!FINISHED
 #################################################
 #*                 Main feed                    #
@@ -342,21 +429,26 @@ def feed():
 
     if request.method == 'POST':
 
-        print("WOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOOW")
-        print(request.form['search'])
+        if "search" in request.form:
 
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
+
+    global full_filename
+    global login_check
+
+    logi = "a" if login_check == 0 else "b"
 
     if curr_user_id == 0:
 
         res = sql_query("user_info","id")
         res = [i for j in res for i in j]
-        query1 = "SELECT * FROM blog_info WHERE uid IN "+str(tuple(res))
+        query1 = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE uid IN "+str(tuple(res))
     
     else:
 
         #query to get blogs of users that the current user follows
-        query1 = "SELECT * FROM blog_info WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user_id)+")"
+        query1 = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE uid IN (SELECT user_id FROM user_follow WHERE follower_id  = "+str(curr_user_id)+")"
 
     temp = sql_dir(query1)
     res=[]
@@ -369,25 +461,23 @@ def feed():
 
         res_content = ["You don't follow anyone."]
         res_titles = ["Please search for users!"]
-        res_authors = ["- The team"]
+        res_author = ["- The team"]
         res_bid = [6]
 
     else:
         
         res_bid = [i[0] for i in res]
-        res_titles=[i[1] for i in res]
-        res_authors = [i[2] for i in res]
-        res_content=[i[3] for i in res]        
+        res_titles = [i[1] for i in res]
+        res_content = [i[2] for i in res]
+        res_author = [i[3] for i in res]
 
-        query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
-        res_authors = sql_dir(query)
-        res_authors= [j for i in res_authors for j in i]
+    path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
 
-    return render_template('feed.html', logo_path = "..\\"+full_filename, res1 = res_titles,res2=res_content, res3=res_authors, res4 = res_bid)
+    return render_template('feed.html', logo_path = path,logi = logi, res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid)
 
 
 
-
+#TODO Add follow unfollow and like dislike and edit
 #!FINISHED
 ####################################
 #*          SINGLE BLOG            #
@@ -395,14 +485,22 @@ def feed():
 @app.route('/blog/<int:blogID>/')
 def blog(blogID):
     
-    full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
+    global full_filename
 
-    query = "SELECT * FROM blog_info WHERE bid ="+str(blogID)
+    if request.method == 'POST':
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
+
+    query = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE bid ="+str(blogID)
     res=sql_dir(query)
     res = [j for i in res for j in i]
     res1 = "admin"
 
-    return render_template('blog.html',logo_path  = "..\\"+full_filename,id = res[0],titl = res[1], author = res1,dets = res[3]  )
+    path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
+
+    return render_template('blog.html',logo_path = "..\\"+full_filename,img_path = path,id = res[0],titl = res[1], author = res[3],conte = res[2]  )
 
 
 
@@ -416,7 +514,7 @@ def home():
 
 
 
-
+#TODO Add follower and following and edit
 #!FINISHED
 #####################################
 #*             profile page         #
@@ -426,40 +524,48 @@ def profile(name):
 
     #Getting the user id using the username nad then using that to fetch the additional details.
 
-    #full_filename = os.path.join(app.config['UPLOAD_FOLDER'], 'icon.jpg')
-    full_filename = url_for('static', filename='icon.jpg')
+    global full_filename
 
-    name1 = name
-    query = "SELECT id FROM user_info WHERE name LIKE '"+name+"'"
+    if request.method == 'POST':
+
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
+
+    logi = "a" if login_check == 0 else "b"
+
+    query = "SELECT id FROM user_info WHERE name = '"+name+"'"
 
     res = sql_dir(query)
     res = [i for j in res for i in j]
     profile_user = res[0]
-    query1 = "SELECT * FROM blog_info WHERE uid = "+str(profile_user)
-    
+    print("User id")
+    print(profile_user)
+
+    query1 = "SELECT bid, btitle, bcontent, name FROM blog_info JOIN user_info on uid = id WHERE uid ="+str(profile_user)
+
     temp = sql_dir(query1)
     res=[]
 
     for i in temp:
         res.append([j for j in i])
-        
+
+    print(res)
+
     if res == []:
 
-        res_content = ["You don't follow anyone."]
-        res_titles = ["Please search for users!"]
+        res_content = ["You don't have any posts."]
+        res_titles = ["Make a blog :)"]
         res_authors = ["- The team"]
-        res_bid = [6]
+        res_bid = [0]
 
     else:
-
+            
         res_bid = [i[0] for i in res]
-        res_titles=[i[1] for i in res]
-        res_authors = [i[2] for i in res]
-        res_content=[i[3] for i in res]        
-
-        query = "SELECT name FROM user_info  WHERE id in "+str(tuple(res_authors))
-        res_authors = sql_dir(query)
-        res_authors= [j for i in res_authors for j in i]
+        res_titles = [i[1] for i in res]
+        res_content = [i[2] for i in res]
+        res_author = [i[3] for i in res]
 
     query = "SELECT * FROM user_addi WHERE uuid = "+str(profile_user)
     res = sql_dir(query)
@@ -468,8 +574,52 @@ def profile(name):
     about = res[2]
     age = res[1]
 
-    return render_template('profile.html',logo_path = "..\\"+full_filename,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_authors,res4 = res_bid)
+    return render_template('profile.html',logo_path = "..\\"+full_filename,logi = logi,username = name,about = about,age =age,res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid)
 
+
+#!FINISHED
+#####################################
+#*             search page          #
+@app.route("/search/<term>/",methods = ['POST','GET'])
+def search(term):
+
+    if request.method == 'POST':
+            
+        if "search" in request.form:
+
+            term = request.form['search']
+            return redirect(url_for('search',term = term))
+
+    res = search_func(term)
+
+    # res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid
+
+    res_b = res["blog"][:]
+    res_u = res["user"][:]
+
+    if res_b == []:
+        res_titles = ["No blogs found"]
+        res_content = ["Please try a different name!"]
+        res_author = ["- The team"]
+        res_bid = [0]
+    else:
+
+        res_bid = [i[0] for i in res_b]
+        res_titles = [i[1] for i in res_b]
+        res_content = [i[2] for i in res_b]
+        res_author = [i[3] for i in res_b]
+
+    if res_u == []:
+
+        res11 = ["No users found"]
+        res22 = ["Please try a different name!"]
+    
+    else:
+            
+        res11 = [i[0] for i in res_u]
+        res22 = [i[1] for i in res_u]
+
+    return render_template('search.html',res1 = res_titles ,res2=res_content,res3=res_author,res4 = res_bid,res11 = res11,res22 = res22)
 
 
 
@@ -490,7 +640,7 @@ def home_page():
 @app.errorhandler(404)
 def page_not_found(e):
 
-    return "WOW 404"
+    return render_template('error.html'), {"Refresh": "3; url=http://127.0.0.1:5000/home/"}
 
 if __name__ == '__main__':
 
