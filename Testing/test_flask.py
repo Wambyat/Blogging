@@ -473,7 +473,7 @@ def feed():
 
     path ="C:\School Files\Lab_Records\IIT_Stuff\MAD1_Project\MAD-1-Project\Testing\static\\uploads\icon.jpg"
 
-    return render_template('feed.html', logo_path = path,logi = logi, res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid)
+    return render_template('feed.html', logo_path = path,logi = logi, res1 = res_titles,res2=res_content, res3=res_author, res4 = res_bid,currname = curr_user)
 
 
 
