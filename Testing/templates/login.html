@@ -1,26 +1,41 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Login</title>
+
 </head>
+
 <body>
 	<div class = "navbar"> 
-		<span>
-		<a href={{url_for('logout')}}>Logout</a>
+
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-		</span>
+		
+		
+		<div class = "logo-div">
+		<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		</a>
+		</div>
+		
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
+
 	</div>
+
 	<div class="container" id="container">
+
 		<div class="form-container">
 			<form action="" method = "post">
 
 				<h1>Login</h1>
 
-				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
-				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+				<input type="text" placeholder="Username" name="username" value="{{ new_user_value  }}">
+				<input type="password" placeholder="Password" name="password" value="{{ new_pass_value }}">
 
 				<span style="padding-top: 10px;">
 				<a href={{url_for('pass_reset')}}> Forgot your password? </a>
@@ -36,6 +51,8 @@
 				{% endif %}
 				<input class = "button_login" type="submit" value="Login">
 
+				<input class = "button_login" type = "submit" value = "Clear" name = "clear" >
+
 			</form>
         	
 		</div>
@@ -44,11 +61,15 @@
 				<div class="overlay-panel">
 
 					<h1>My Blogger Space</h1>
+				
 					<p>We need more users please sign in :(</p>
 					
 				</div>
 			</div>
+
 		</div>
 	</div>
+
 </body>
+
 </html>

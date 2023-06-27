@@ -1,19 +1,36 @@
 <!DOCTYPE html>
+
 <html>
+
 <head>
+
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 	<title>Password Reset</title>
+
 </head>
+
 <body>
+
 	<div class = "navbar"> 
-		<span>
-		<a href={{url_for('logout')}}>Logout</a>
+
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-		</span>
+		
+		
+		<div class = "logo-div">
+		<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+		<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+		</a>
+		</div>
+		
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
+
 	</div>
+
 	<div class="container" id="container" style="width: 55vh;">
+
 		<div class="form-container" style="position: absolute; left: 15%; width: 70%;">
 			<form action="" method = "post" style="padding: 0;">
 
@@ -40,6 +57,9 @@
 
 			</form>
 		</div>
+
 	</div>
+
 </body>
+
 </html>

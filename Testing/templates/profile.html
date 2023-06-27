@@ -1,0 +1,169 @@
+<!DOCTYPE html>
+
+<html>
+
+<head>
+	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
+	<title>{{username}}'s profile</title>
+	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
+
+</head>
+
+<body>
+
+	<div class = "navbar"> 
+		
+		{% if "a" in logi %}
+		<a href={{url_for('login')}}>Login/Sign Up</a>
+
+		{% else%}
+		<a href={{url_for('logout')}}>Logout</a>
+		<a href="{{url_for('profile', name = currname)}}">Your Profile</a>
+		<a href={{url_for('newblog') }}>Create a Blog</a>
+		{% endif %}
+		<a href={{url_for('home')}}>Home</a>
+		
+		<div class = "logo-div">
+			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
+			</a>
+		</div>
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
+
+	</div>
+
+	<div class="container" id="container" style="width: 50%;">
+
+		{% if "a" in edi %}
+
+		<div class="form-container">
+			<form action="" method = "post" style="width: fit-content;">
+
+				<input name = "uname" Value = "{{username}}"  style="font-size: 100px;"/>
+
+				<input class="button_login" type="submit" name="uname_up" value="Save name change"/>
+
+
+			</form>
+        	
+		</div>
+
+		<div class="overlay-container">
+			<div class="overlay" >
+				<div class="overlay-panel" style="width: 60%;">
+
+					<form action="" style="background-color: #6b2bff; position: relative; left: 40px;"  method = "post">
+
+						<label for="about" style="color: rgb(255, 255, 255);font-size: 20px;font-weight: bold;">About you:</label>
+						<input name = "about" Value = "{{about}}"  style="font-size: 20px;"/>
+
+						<label for="age" style="color: rgb(255, 255, 255);font-size: 20px;font-weight: bold;">Age:</label>
+
+						<input name = "age" Value = "{{age}}"  style="font-size: 25px;"/>
+						
+						<p>You have {{no_of_blogs}} blogs </p>
+						<a style="color:white; font-weight:bold;" href="{{url_for('fols',name = username)}}">My following and followers!</a>
+
+						<input style="border-color: #c7c0ee; border: solid;"  class="button_login" type="submit" name="about_up" value="Save about change"/>
+					</form>
+					<form style="height: fit-content; background-color: #6b2bff; position: relative; bottom: 20px; left: 20px;"   method="post" onsubmit = "return confirm('Are you sure you wish to delete?');">
+
+						<input style="border-color: #c7c0ee; border: solid;" class = "button_login" type="submit" name = "delete" value="Delete"/>
+		
+					</form>
+				</div>
+			</div>
+
+		</div>
+		
+		{% else %}
+
+		<div class="form-container">
+			<form action="" method = "post" style="width: fit-content; max-width: 100%;">
+
+				<h1 style="font-size: 100px;">{{username}}</h1>
+
+
+			</form>
+        	
+		</div>
+
+		<div class="overlay-container">
+			<div class="overlay" >
+				<div class="overlay-panel" style="width: 60%;">
+
+					<h1 style="width: inherit;">{{about}}</h1>
+					<p>I am {{age}} years old</p>
+					<p>I have {{no_of_blogs}} blogs </p>
+					<a style="color:white; font-weight:bold;"  href="{{url_for('fols',name = username)}}">My following and followers!</a>
+					
+					{% if "n" in fol %}
+
+					<form action="" method = "post" style="width: fit-content; background-color: #6b2bff;">
+
+						<input class="button_login" type="submit" name="follow" value="Follow me! :)"/>
+					</form>
+
+					{% else %}
+
+					<form action="" method = "post" style="width: fit-content; background-color: #6b2bff;">
+
+						<input class="button_login" type="submit" name="unfollow" value="Unfollow me! :("/>
+					</form>
+					
+					{% endif %}
+
+				</div>
+			</div>
+		</div>
+
+		{% endif %}
+
+	</div>
+
+	
+	<div class = "megabooga" style="max-width: 45%;">
+
+		{% for row in res1  %}
+		{% set titl = res1[loop.index-1] %}
+		{% set id = res4[loop.index-1] %}
+
+		<div class = "blog">
+
+			<div class = "blog-content">
+				{% set dets = res2[loop.index-1] %}
+				<th>
+					<tr>
+						{{titl}}
+					</tr>
+					
+					<tr>
+						{{dets}}
+					</tr>
+				</th>
+				
+				<div style = "padding-top: 18px;">
+				<a class="button_login" href={{ url_for('blog' , blogID = id) }} style="padding: 10px 10px; font-size: 30px; width: fit-content; display: inline-block; margin: 0;">
+					{{titl}}
+				</a>
+				{% set author = res3[loop.index-1] %}
+				
+				<a href={{ url_for('profile' , name = author) }} style="display: inline; margin: 0;"> {{author}} </a>
+				</div>
+				<hr size="2" width = "98%" color = "black" >
+				{% set dets = res2[loop.index-1] %}
+				<p>
+					{{dets}}
+				</p>
+			</div>
+		</div>
+
+		{% endfor %}
+
+	</div>
+
+</body>
+
+</html>

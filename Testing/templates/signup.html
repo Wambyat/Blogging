@@ -1,19 +1,32 @@
 <!DOCTYPE html>
 <html>
+
 <head>
 	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
-	<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-	<title>Login</title>
+	<title>Sign Up</title>
 </head>
+
 <body>
+
 	<div class = "navbar"> 
-		<span>
-		<a href={{url_for('logout')}}>Logout</a>
+
 		<a href={{url_for('login')}}>Login/Sign Up</a>
 		<a href={{url_for('home')}}>Home</a>
-		</span>
+		
+		
+		<div class = "logo-div">
+		<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
+		<img style = "background-color:rgba(0,0,0,0.0)" src = "{{logo_path}}" alt = "icon be gone" class="logo"/>
+		</a>
+		</div>
+		
+		<form style= "background-color: #c7c0ee;" action = "" method="post">
+			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
+		</form>
 	</div>
+	
 	<div class="container" id="container">
+
 		<div class="form-container">
 			<form action="" method = "post">
 
@@ -21,6 +34,11 @@
 
 				<input type="text" placeholder="Username" name="username" value="{{ request.form.username }}">
 				<input type="password" placeholder="Password" name="password" value="{{ request.form.password }}">
+
+				<span>
+				<input style="width: 20%; display: inline;" type = "text" placeholder = "Age" name = "age" value = "{{ request.form.age }}">
+				<input style = "width:70%;" type = "text" placeholder = "About you :)" name = "about" value = "{{ request.form.about }}">
+				</span>
 
 				<a href={{url_for('login')}}>Login Instead?</a>
 				
@@ -31,10 +49,10 @@
 				<a style="font-size: 20px; padding-top: 3px;">{{error}}</a>
 
 				{% endif %}
+				
 				<input class = "button_login" type="submit" value="Login">
 
 			</form>
-
 		</div>
 
 		<div class="overlay-container">
@@ -42,11 +60,14 @@
 				<div class="overlay-panel">
 
 					<h1>My Blogger Space</h1>
-					<p>We need more users please sign in :(</p>
+					<p>We need more users please sign up :(</p>
 
 				</div>
 			</div>
 		</div>
+
 	</div>
+
 </body>
+
 </html>

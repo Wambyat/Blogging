@@ -1,0 +1,38 @@
+Is the basic login form created?
+Yes
+
+Does the user feed displays posts created by other users? 
+Yes
+
+User Management: Can a user search for a particular user?
+Yes
+
+User Management: Can a new user be created?
+Yes
+
+User Management: Can an existing user information be updated?
+Yes
+
+Post Management: Can a new post by a user be created?
+Yes
+
+Post Management: Can an existing post be updated?
+Yes
+
+Post Management: Can an existing post be deleted?
+Yes
+
+Can a user follow/unfollow another user?
+Yes
+
+Does your application contain a personal info page that gives information of your created posts, users you follow, your followers etc.?
+Yes
+
+Does your application allow engaging (liking/commenting) with a post?
+Yes
+
+Does your application show a graphical representation of all the engagements on posts?
+No
+
+APIs for CRUD on user/posts?
+Yes

@@ -1,0 +1,98 @@
+test_flask:
+  login:
+    input:
+    output: Handles login logic and returns login page
+  logout:
+    input:
+    output:  Handles logout logic and returns logout page
+  pass_reset:
+    input:
+    output:  Handles reset of password logic and returns password reset page
+  signup:
+    input:
+    output:  Handles signup logic and returns signup page
+  redir_to_login:
+    input:
+    output:  Redirects to login
+  redir_to_logout:
+    input:
+    output:  Redirects to logout
+  newblog:
+    input:
+    output:  Handles creating a new blog's logic and returns newblog page
+  feed:
+    input:
+    output:  Handles generating a "feed" for the current user and returns feed page
+  blog:
+    input: blogID
+    output: Returns a blog page based on blogID. Will return an editable page if the current user make the blog.
+  home:
+    input:
+    output: Redirects to feed
+  fols:
+    input: name
+    output: returns a page with all following and followers of the username (name)
+  profile:
+    input: name
+    output: Returns a profile page based on name. Will return an editable page if it is the current user's profile.
+  search:
+    input: term
+    output: Returns a search page based on term. Will return a page with users and blogs.
+  home_page:
+    input:
+    output: Ignore this currently believed to do nothing.
+  page_not_found:
+    input: 404
+    output: Returns a 404 page and redirects to feed after 3 seconds.
+test_db.py:
+  sql_query:
+    input: table_name,column_name
+    output: all values in that column
+  sql_dir:
+    input: query
+    output: result from the query
+  search_func:
+    input: term
+    output: dict of blogs and users with that term present
+  new_blog:
+    input: title,content,uid
+    output: new blog made with the above values
+  same_user:
+    input: blogId,cid
+    output: This checks if current user is the same as the user who created the blog additionally checks if user has liked the blog
+  update_blog:
+    input: blogID, title, content
+    output: This updates the selected blog
+  delete_blog:
+    input: blogID
+    output: This delete the blog
+  like_blog:
+    input: blogID, cid
+    output: This adds a like to blog from current user
+  get_likes:
+    input: blogID
+    output: This returns the number of likes for a blog
+  get_blogs:
+    input: uid
+    output: This returns the number of blogs for a user
+  get_following:
+    input: uid
+    output: This returns the following for a user
+  get_followers:
+    input: uid
+    output: This returns the followers for a user
+  update_user_info:
+    input: uid, name
+    output: This updates user_info
+  update_user_addi:
+    input: uid, age, description
+    output: This updates user_addi
+  delete_user:
+    input: uid
+    output: Deletes the user
+  follow_user:
+    input: uid,cid
+    output: This adds or removes a follower to a user
+  get_user_id:
+    input: username
+    output: This return uid based on username

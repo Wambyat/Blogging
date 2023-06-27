@@ -1,22 +1,17 @@
 <!DOCTYPE html>
-
 <html>
-
 <head>
-	<link rel="stylesheet" href="{{url_for('.static', filename='style_login.css')}}">
-	<title>Logout</title>
-
+	<link rel = "stylesheet" href = "{{url_for('.static', filename='style_login.css')}}">
+	<title>New Blog</title>
+	<link rel = "icon" type = "image/png" href = "{{logo_path}}">
 </head>
-
 <body>
-
 	<div class = "navbar"> 
 
 		<a href={{url_for('logout')}}>Logout</a>
 		<a href="{{url_for('profile', name = currname)}}">Your Profile</a>
-		<a href={{url_for('newblog') }}>Create a Blog</a>
 		<a href={{url_for('home')}}>Home</a>
-		
+
 		<div class = "logo-div">
 			<a href={{url_for('home')}} style = "background-color: rgba(0,0,0,0.0); position: absolute; width: 75px; height: 65px; "></a>
 			<img src = "{{logo_path}}" alt = "y u see this smh" class="logo"/>
@@ -25,23 +20,19 @@
 		<form style= "background-color: #c7c0ee;" action = "" method="post">
 			<input style = "font-size: 20px; position: relative; left: 35px; padding: 10px;" type = text placeholder="Search for blogs here." value = "{{ request.form.search }}" name = "search" >
 		</form>
-
+		
 	</div>
 
-	<div class="container" id="container" style="width: 55vh;">
-
-		<div class="form-container" style="position: absolute; left: 15%; width: 70%;">
-			<form action="" method = "post" style="padding: 0;">
-
-				<h1 style="font-size: 35px;">You are logged in as {{username}}</h1>
-
-				<input class = "button_login" type="submit" name = "logout" value="Logout">
-
+	<div class="container" style="height: auto">
+		<div class = ".form-container" style = "justify-content: center;">
+			<form action ="" method = "POST" enctype="multipart/form-data">
+				<h1>New Blog</h1>
+				<input type = "text" name = "title" placeholder = "Title" required>
+				<input type = "text" name = "content" placeholder = "Content" required>
+				<input type = "file" name = "image" placeholder = "Image" required>
+				<input class = "button_login" type="submit" name = "blog" value="Make a new blog!">
 			</form>
 		</div>
-
 	</div>
-
 </body>
-
 </html>
